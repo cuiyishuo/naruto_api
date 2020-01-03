@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
+<mapper namespace="com.solplatform.mapper.UserMapper">
+</mapper>

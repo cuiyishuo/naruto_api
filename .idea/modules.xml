@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/solplatform.iml" filepath="$PROJECT_DIR$/.idea/solplatform.iml" />
       <module fileurl="file://$PROJECT_DIR$/solplatform.iml" filepath="$PROJECT_DIR$/solplatform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/solplatform-entity/solplatform-entity.iml" filepath="$PROJECT_DIR$/solplatform-entity/solplatform-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/solplatform-service/solplatform-service.iml" filepath="$PROJECT_DIR$/solplatform-service/solplatform-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/solplatform-web/solplatform-web.iml" filepath="$PROJECT_DIR$/solplatform-web/solplatform-web.iml" />
     </modules>
   </component>
 </project>
