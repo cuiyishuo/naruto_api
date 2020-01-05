@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3285287e-831d-44c5-9fbf-5b34edeea63e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/cuiyishuo.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/solplatform-service/src/main/java/com/solplatform/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-entity/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-entity/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-entity/solplatform-entity.iml" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-entity/solplatform-entity.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-entity/src/main/java/com/solplatform/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-entity/src/main/java/com/solplatform/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-entity/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-entity/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-entity/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-entity/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-web/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-web/solplatform-web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-web/solplatform-web.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solplatform-web/src/main/resources/mappers/userMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/solplatform-web/src/main/resources/mappers/userMapper.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -32,14 +18,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/testservice/TestUserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
+            <state relative-caret-position="408">
               <caret line="24" column="9" lean-forward="true" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="423">
+              <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -111,7 +106,6 @@
         <option value="$PROJECT_DIR$/solplatform-entity/src/main/java/com/solplatform/entity/UserEntity.java" />
         <option value="$PROJECT_DIR$/solplatform-web/src/main/java/com/solplatform/SpringbootApplication.java" />
         <option value="$PROJECT_DIR$/solplatform-entity/pom.xml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/solplatform-web/pom.xml" />
         <option value="$PROJECT_DIR$/solplatform-entity/src/test/java/com/solplatform/mapper/UserMapperTest.java" />
         <option value="$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/testmapper/TestMapper.java" />
@@ -123,6 +117,7 @@
         <option value="$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/entity/TestUserMapper.java" />
         <option value="$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/testentity/TestUserMapper.java" />
         <option value="$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/testservice/TestUserService.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -376,7 +371,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/testmapper/TestMapper.java&#10;/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/test/java/com/solplatform/service/TestUserService.java&#10;/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/test/java/com/solplatform/mapper/UserMapperTest.java&#10;/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/test/java/com/solplatform/testservice/TestUserService.java&#10;/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/test/java/com/solplatform/testentity/TestUserMapper.java&#10;/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/test/java/com/solplatform/entity/TestUserMapper.java" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1578205186489" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1578208615857" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
@@ -522,7 +517,7 @@
       <workItem from="1577373181133" duration="1430000" />
       <workItem from="1577933973166" duration="1601000" />
       <workItem from="1578035985792" duration="4331000" />
-      <workItem from="1578105406705" duration="11558000" />
+      <workItem from="1578105406705" duration="11878000" />
     </task>
     <servers />
   </component>
@@ -559,7 +554,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17506000" />
+    <option name="totallyTimeSpent" value="17826000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -572,8 +567,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="23" width="1877" height="1057" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17765668" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17765668" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -583,13 +579,13 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49966148" visible="true" weight="0.31528664" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49966148" weight="0.31528664" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4735294" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.497543" weight="0.31518987" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49646226" weight="0.25477707" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49646226" visible="true" weight="0.25477707" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5035377" side_tool="true" weight="0.25499412" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3280255" />
@@ -666,13 +662,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
@@ -763,11 +752,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/solplatform-web/src/test/java/com/solplatform/testservice/TestUserService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
+        <state relative-caret-position="408">
           <caret line="24" column="9" lean-forward="true" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="29" column="9" lean-forward="true" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
         </state>
       </provider>
     </entry>
