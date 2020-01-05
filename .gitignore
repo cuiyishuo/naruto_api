@@ -26,5 +26,6 @@ hs_err_pid*
 
 # 自定义
 *.iml
+test/
 
 
