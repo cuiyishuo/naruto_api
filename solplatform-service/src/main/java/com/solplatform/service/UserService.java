@@ -2,6 +2,7 @@ package com.solplatform.service;
 
 import com.solplatform.entity.UserEntity;
 import com.solplatform.mapper.UserMapper;
+import com.solplatform.vo.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -27,16 +28,21 @@ public class UserService {
      * @param userEntity
      * @return
      */
-    public int registertUser(UserEntity userEntity) {
-        int i = 1;
+    public ResponseMessage registertUser(UserEntity userEntity) {
         try {
-            userMapper.addUser (userEntity);
+            int i = userMapper.addUser (userEntity);
+            // insert成功会返回成功条数，用来判断是否注册成功
+            if (i == 1) {
+                return ResponseMessage.successResponse ();
+            } else {
+                return ResponseMessage.errorResponse ("注册异常", 400);
+            }
         } catch (DuplicateKeyException e) {
             log.error ("输入的用户名已被注册");
-            return -1;
+            return ResponseMessage.errorResponse ("用户名已被注册", 400);
         } catch (Exception e) {
-            log.error ("注册失败",e);
+            log.error ("注册失败", e);
+            return ResponseMessage.errorResponse ("注册异常", 400);
         }
-        return i;
     }
 }
