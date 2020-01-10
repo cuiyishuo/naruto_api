@@ -50,11 +50,10 @@
             <version>7.0.0-beta4</version>
             <scope>test</scope>
         </dependency>
+        <!--数据校验依赖-->
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.0.0-beta4</version>
-            <scope>test</scope>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 

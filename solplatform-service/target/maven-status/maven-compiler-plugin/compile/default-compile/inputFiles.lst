@@ -1,2 +1,3 @@
-/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/ResponseMessage.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/common/CodeMsg.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/common/CommonResult.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/UserService.java

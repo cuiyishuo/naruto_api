@@ -1,2 +1,3 @@
+com/solplatform/common/CodeMsg.class
+com/solplatform/common/CommonResult.class
 com/solplatform/service/UserService.class
-com/solplatform/vo/ResponseMessage.class
