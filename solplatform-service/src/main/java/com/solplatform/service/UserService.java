@@ -6,8 +6,10 @@ import com.solplatform.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,24 +33,21 @@ public class UserService {
      * @param userEntity
      * @return
      */
-    public CommonResult<UserEntity> registertUser(UserEntity userEntity) {
+    public CommonResult<UserEntity> registertUser(UserEntity userEntity, HttpServletResponse response) {
         try {
             int i = userMapper.addUser (userEntity);
             // insert成功会返回成功条数，用来判断是否注册成功
-            List list = new ArrayList ();
-            list.add ("l1");
-            list.add ("l2");
             if (i == 1) {
                 return CommonResult.success (userEntity);
             } else {
-                return CommonResult.failed ("注册异常");
+                return CommonResult.failed ("注册异常",response);
             }
         } catch (DuplicateKeyException e) {
             log.error ("输入的用户名已被注册");
-            return CommonResult.failed ("输入的用户名已被注册");
+            return CommonResult.failed ("输入的用户名已被注册",response);
         } catch (Exception e) {
             log.error ("注册失败", e);
-            return CommonResult.failed ("注册异常");
+            return CommonResult.failed ("注册异常",response);
         }
     }
 }
