@@ -10,8 +10,7 @@ import lombok.Data;
  * @create 2019-12-30  23:40
  */
 @Data
-public class UserEntity {
-    private Integer id;
+public class UserEntity extends BaseEntity {
     @NotBlank(message = "用户名不能为空")
     private String userName;
     @NotBlank(message = "密码不能为空")

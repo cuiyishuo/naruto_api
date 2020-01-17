@@ -10,6 +10,12 @@ import java.util.List;
 public interface UserMapper {
     // 新增用户
     int addUser(UserEntity userEntity);
+
     // 查询用户
     List<UserEntity> selectUser();
+
+    UserEntity selectUserBy();
+
+    // 检查用户是否存在
+    UserEntity checkUser(UserEntity userEntity);
 }

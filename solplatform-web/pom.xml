@@ -39,6 +39,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.5.3.RELEASE</version>
                 <configuration>
+                    <classifier>exec</classifier>
                     <!-- 没有该配置，devtools 不生效 -->
                     <fork>true</fork>
                 </configuration>

@@ -1,7 +1,6 @@
 package com.solplatform.common;
 
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +17,6 @@ public class CommonResult<T> {
     private int code;
     private String message;
     private T data;
-
 
     protected CommonResult(int code, String message, T data) {
         this.code = code;
@@ -43,9 +41,10 @@ public class CommonResult<T> {
     }
 
     /**
-     * 通用失败返回结果
+     * 不需要错误信息的返回
      */
-    public static <T> CommonResult<T> failed() {
+    public static <T> CommonResult<T> failed(HttpServletResponse response) {
+        response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
         return new CommonResult<T> (CodeMsg.ERROR.getCode (), CodeMsg.ERROR.getMsg (), null);
     }
 
@@ -54,8 +53,7 @@ public class CommonResult<T> {
      *
      * @param message 提示信息
      */
-    public static <T> CommonResult<T> failed(String message, HttpServletResponse response) {
-        response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
+    public static <T> CommonResult<T> failed(String message) {
         return new CommonResult<T> (CodeMsg.ERROR.getCode (), message, null);
     }
 

@@ -4,11 +4,42 @@
 <!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
 <mapper namespace="com.solplatform.mapper.UserMapper">
     <insert id="addUser" parameterType="com.solplatform.entity.UserEntity"
-    useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into user (user_name,password,create_time,update_time)
         values (#{userName},#{password},now(),now())
     </insert>
+
     <select id="selectUser" resultType="com.solplatform.entity.UserEntity">
         select * from user
     </select>
+
+    <sql id="title">user_name,password,create_time,update_time</sql>
+    <select id="selectUserBy" resultType="com.solplatform.entity.UserEntity">
+        select
+        <include refid="title"/>
+        from user
+        <where>
+            1=1
+            <if test="userName != null">
+                and user_name = #{userName}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="checkUser" resultMap="userMap" parameterType="com.solplatform.entity.UserEntity">
+        select
+        <include refid="title"/>
+        from user where user_name=#{userName} and password=#{password}
+    </select>
+    <resultMap id="userMap" type="com.solplatform.entity.UserEntity">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
 </mapper>

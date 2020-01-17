@@ -1,17 +1,10 @@
 package com.solplatform.service;
 
-import com.solplatform.common.CommonResult;
 import com.solplatform.entity.UserEntity;
 import com.solplatform.mapper.UserMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 用户相关业务
@@ -19,8 +12,6 @@ import java.util.List;
  * @author sol
  * @create 2020-01-04  23:38
  */
-
-@Slf4j
 @Service
 public class UserService {
 
@@ -31,23 +22,30 @@ public class UserService {
      * 注册用户
      *
      * @param userEntity
+     */
+    public void registertUser(UserEntity userEntity) {
+        try {
+            userMapper.addUser (userEntity);
+        } catch (DuplicateKeyException e) {
+            throw new DuplicateKeyException ("主键重复异常");
+        }
+    }
+
+    /**
+     * 检查用户是否存在
+     *
+     * @param userEntity
      * @return
      */
-    public CommonResult<UserEntity> registertUser(UserEntity userEntity, HttpServletResponse response) {
-        try {
-            int i = userMapper.addUser (userEntity);
-            // insert成功会返回成功条数，用来判断是否注册成功
-            if (i == 1) {
-                return CommonResult.success (userEntity);
-            } else {
-                return CommonResult.failed ("注册异常",response);
-            }
-        } catch (DuplicateKeyException e) {
-            log.error ("输入的用户名已被注册");
-            return CommonResult.failed ("输入的用户名已被注册",response);
-        } catch (Exception e) {
-            log.error ("注册失败", e);
-            return CommonResult.failed ("注册异常",response);
+    public boolean checkUser(UserEntity userEntity) {
+        boolean isLogin;
+        UserEntity userEntityDB = userMapper.checkUser (userEntity);
+        // 判断是否可以查到用户信息
+        if (userEntityDB == null) {
+            isLogin = false;
+        } else {
+            isLogin = true;
         }
+        return isLogin;
     }
 }

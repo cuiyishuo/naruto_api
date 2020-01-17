@@ -1,4 +1,6 @@
-com/solplatform/controller/main/RegisterController.class
+com/solplatform/controller/main/LoginController.class
 com/solplatform/SpringbootApplication.class
-com/solplatform/controller/TestController.class
+com/solplatform/exception/WebExceptionHandler.class
 com/solplatform/configure/CorsConfig.class
+com/solplatform/controller/main/RegisterController.class
+com/solplatform/controller/TestController.class

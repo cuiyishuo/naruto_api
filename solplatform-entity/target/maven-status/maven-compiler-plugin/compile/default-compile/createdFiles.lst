@@ -1,2 +1,3 @@
 com/solplatform/mapper/UserMapper.class
+com/solplatform/entity/BaseEntity.class
 com/solplatform/entity/UserEntity.class
