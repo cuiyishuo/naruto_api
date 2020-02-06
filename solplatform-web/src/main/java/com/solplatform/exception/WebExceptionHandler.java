@@ -20,15 +20,27 @@ import java.time.LocalTime;
 public class WebExceptionHandler {
 
     /**
+     * 运行时异常
+     *
+     * @return
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler()
+    public CommonResult unauthorizedException(RuntimeException e) {
+        System.err.println (" message2:" + e.getMessage () + LocalTime.now ());
+        return CommonResult.validateFailed (e.getMessage ());
+    }
+
+    /**
      * 查询主键重复异常
      *
      * @return
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = DuplicateKeyException.class)
-    public CommonResult ageDeleteException() {
-        System.err.println ("该用户名已被注册：" + LocalTime.now ());
-        return CommonResult.failed ("该用户名已被注册");
+    @ExceptionHandler()
+    public CommonResult uniqueVerifyException(DuplicateKeyException e) {
+        System.err.println (" message2:" + e.getMessage () + LocalTime.now ());
+        return CommonResult.failed (e.getMessage ());
     }
 
     /**

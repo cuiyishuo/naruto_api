@@ -27,7 +27,7 @@ public class UserService {
         try {
             userMapper.addUser (userEntity);
         } catch (DuplicateKeyException e) {
-            throw new DuplicateKeyException ("主键重复异常");
+            throw new DuplicateKeyException ("该用户名已被注册");
         }
     }
 

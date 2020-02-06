@@ -1,6 +1,8 @@
-/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/TestController.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/interceptor/AuthInterceptor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/exception/WebExceptionHandler.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/configure/CorsConfig.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/interceptor/InterceptorConfig.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/main/ProjectController.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/main/RegisterController.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/main/LoginController.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/SpringbootApplication.java
