@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
@@ -30,7 +31,7 @@ public class RegisterController {
      * @return
      */
     @PostMapping("/signup")
-    public CommonResult<UserEntity> signup(@Valid UserEntity userEntity, BindingResult bindingResult, HttpServletResponse response) {
+    public CommonResult<UserEntity> signup(@Valid UserEntity userEntity, BindingResult bindingResult, HttpServletResponse response, HttpSession httpSession) {
         //  判断是否字段有错误
         if (bindingResult.hasErrors ()) {
             System.err.println ("参数有问题");
@@ -39,6 +40,9 @@ public class RegisterController {
             return CommonResult.failed (errMsg);
         } else {
             userService.registertUser (userEntity);
+            // 成功后将id保存到sesstion中
+            String userId = userEntity.getId ();
+            httpSession.setAttribute ("userId",userId);
             return CommonResult.success (userEntity);
         }
     }

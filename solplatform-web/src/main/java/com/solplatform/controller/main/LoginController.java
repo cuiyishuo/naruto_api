@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
@@ -35,7 +36,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/login")
-    public CommonResult<UserEntity> login(@Valid UserEntity userEntity, BindingResult bindingResult, HttpServletResponse response) {
+    public CommonResult<UserEntity> login(@Valid UserEntity userEntity, BindingResult bindingResult, HttpServletResponse response, HttpSession httpSession) {
         //  判断是否字段有错误
         if (bindingResult.hasErrors ()) {
             System.err.println ("参数有问题");
@@ -43,11 +44,14 @@ public class LoginController {
             response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
             return CommonResult.failed (errMsg);
         } else {
-            if (userService.checkUser (userEntity)) {
-                return CommonResult.success (userEntity);
-            } else {
+            String userId = userService.checkUser (userEntity);
+            if (userId.isEmpty ()) {
                 response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
                 return CommonResult.failed ("用户不存在");
+            } else {
+                System.err.println ("登录成功，将userId存储到session中");
+                httpSession.setAttribute ("userId", userId);
+                return CommonResult.success (userEntity);
             }
         }
     }

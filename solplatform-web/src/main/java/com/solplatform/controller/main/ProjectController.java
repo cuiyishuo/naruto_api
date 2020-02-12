@@ -54,7 +54,7 @@ public class ProjectController {
             response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
             return CommonResult.failed (errMsg);
         } else {
-            projectService.createProject (projectEntity);
+            projectService.modifyProject (projectEntity);
             return CommonResult.success (projectEntity);
         }
     }

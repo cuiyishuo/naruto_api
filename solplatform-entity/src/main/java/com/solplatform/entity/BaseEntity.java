@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class BaseEntity {
-    private Integer id;
+    private String id;
     private String createTime;
     private String updateTime;
     private int yn;

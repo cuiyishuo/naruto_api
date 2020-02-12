@@ -3,17 +3,19 @@
 
 <!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
 <mapper namespace="com.solplatform.mapper.UserMapper">
-    <insert id="addUser" parameterType="com.solplatform.entity.UserEntity"
-            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user (user_name,password,create_time,update_time)
-        values (#{userName},#{password},now(),now())
+    <insert id="addUser" parameterType="com.solplatform.entity.UserEntity">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into user (id,user_name,password,create_time,update_time)
+        values (#{id},#{userName},#{password},now(),now())
     </insert>
 
     <select id="selectUser" resultType="com.solplatform.entity.UserEntity">
         select * from user
     </select>
 
-    <sql id="title">user_name,password,create_time,update_time</sql>
+    <sql id="title">id,user_name,password,create_time,update_time</sql>
     <select id="selectUserBy" resultType="com.solplatform.entity.UserEntity">
         select
         <include refid="title"/>
@@ -36,7 +38,7 @@
         from user where user_name=#{userName} and password=#{password}
     </select>
     <resultMap id="userMap" type="com.solplatform.entity.UserEntity">
-        <id property="id" column="id"/>
+        <result property="id" column="id"/>
         <result property="userName" column="user_name"/>
         <result property="password" column="password"/>
         <result property="createTime" column="create_time"/>

@@ -4,10 +4,12 @@
 <!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
 <mapper namespace="com.solplatform.mapper.ProjectMapper">
 
-    <insert id="addProject" parameterType="com.solplatform.entity.ProjectEntity" useGeneratedKeys="true"
-            keyProperty="id" keyColumn="id">
-        insert into project (project_name,create_time,update_time)
-        values (#{projectName},now(),now())
+    <insert id="addProject" parameterType="com.solplatform.entity.ProjectEntity">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into project (id,project_name,create_time,update_time)
+        values (#{id},#{projectName},now(),now())
     </insert>
 
     <!--通过set标签，哪个字段有值更新哪个字段-->

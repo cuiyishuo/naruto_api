@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * 用户相关业务
  *
@@ -37,15 +39,13 @@ public class UserService {
      * @param userEntity
      * @return
      */
-    public boolean checkUser(UserEntity userEntity) {
-        boolean isLogin;
+    public String checkUser(UserEntity userEntity) {
         UserEntity userEntityDB = userMapper.checkUser (userEntity);
-        // 判断是否可以查到用户信息
+        // 判断是否可以查到用户信息,查到了则返回用户id
         if (userEntityDB == null) {
-            isLogin = false;
+            return "";
         } else {
-            isLogin = true;
+            return userEntityDB.getId ();
         }
-        return isLogin;
     }
 }
