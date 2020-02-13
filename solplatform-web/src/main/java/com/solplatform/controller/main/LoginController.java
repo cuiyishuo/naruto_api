@@ -49,8 +49,11 @@ public class LoginController {
                 response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
                 return CommonResult.failed ("用户不存在");
             } else {
-                System.err.println ("登录成功，将userId存储到session中");
+                // 登录成功，将userId存储到session中
                 httpSession.setAttribute ("userId", userId);
+                // 登录成功后设置token,将token放到响应头中返回
+                String authToken = "Bearer " + userEntity.getUserName () + userEntity.getPassword () + ".xxx.zzz";
+                response.setHeader ("Authorization", authToken);
                 return CommonResult.success (userEntity);
             }
         }

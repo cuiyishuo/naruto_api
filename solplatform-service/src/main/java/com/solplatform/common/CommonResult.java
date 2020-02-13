@@ -3,6 +3,7 @@ package com.solplatform.common;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 通用返回对象

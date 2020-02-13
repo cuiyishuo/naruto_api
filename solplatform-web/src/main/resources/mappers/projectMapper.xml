@@ -26,4 +26,17 @@
         where id=#{id}
     </update>
 
+    <select id="getProjectList" resultMap="projectMap" parameterType="java.lang.String">
+        select p.id,p.project_name,p.create_time from  project_member pm
+        left join project p
+        on pm.project_id=p.id
+        where pm.user_id=#{0}
+    </select>
+    <resultMap id="projectMap" type="com.solplatform.entity.ProjectEntity">
+        <result property="id" column="id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
 </mapper>

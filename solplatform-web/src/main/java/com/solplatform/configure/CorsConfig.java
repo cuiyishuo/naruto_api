@@ -22,6 +22,8 @@ public class CorsConfig {
         config.setAllowCredentials (true);
         // 设置你要允许的网站域名，如果全允许则设为 *
         config.addAllowedOrigin ("*");
+        // 跨域时允许暴露的接口（前端可以拿到的）
+        config.addExposedHeader("Authorization");
         // 如果要限制 HEADER 或 METHOD 请自行更改
         config.addAllowedHeader ("*");
         config.addAllowedMethod ("*");

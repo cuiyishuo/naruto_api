@@ -16,11 +16,11 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         System.err.println ("进入拦截器");
-        String authorization = httpServletRequest.getHeader ("authorization");
-        System.err.println ("authorization:" + authorization);
+        String authorization = httpServletRequest.getHeader ("Authorization");
+        System.err.println ("Authorization:" + authorization);
         // 暂时先判空，后续换成jwt
         if (null == authorization) {
-            System.err.println ("authorization:" + authorization);
+            System.err.println ("Authorization:" + authorization);
             // 抛出异常，在统一的异常捕获类中处理
             throw new RuntimeException ("未登录或token已失效，请重新登录");
         }

@@ -1,5 +1,7 @@
 package com.solplatform.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.ProjectMemberEntity;
 import com.solplatform.mapper.ProjectMapper;
@@ -11,6 +13,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 项目管理业务
@@ -26,6 +29,11 @@ public class ProjectService {
     @Autowired
     ProjectMemberMapper projectMemberMapper;
 
+    /**
+     * 新增项目
+     *
+     * @param projectEntity
+     */
     public void createProject(ProjectEntity projectEntity) {
         try {
             projectMapper.addProject (projectEntity);
@@ -47,11 +55,33 @@ public class ProjectService {
         }
     }
 
+    /**
+     * 修改项目
+     *
+     * @param projectEntity
+     */
     public void modifyProject(ProjectEntity projectEntity) {
         try {
             projectMapper.modifyProject (projectEntity);
         } catch (DuplicateKeyException e) {
             throw new DuplicateKeyException ("项目名称已存在");
+        }
+    }
+
+    public List<ProjectEntity> getProjectList(Integer pageNo, Integer pageSize) {
+        try {
+            // 分页查询
+            Page page = PageHelper.startPage (pageNo, pageSize, true);
+            // 获取userId
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes ();
+            HttpServletRequest request = requestAttributes.getRequest ();
+            String userId = (String) request.getSession ().getAttribute ("userId");
+            List<ProjectEntity> projectList = projectMapper.getProjectList (userId);
+            return projectList;
+        } catch (Exception e) {
+            // 待定
+            System.err.println ("查询结果异常");
+            return null;
         }
     }
 }

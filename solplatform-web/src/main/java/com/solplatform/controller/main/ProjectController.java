@@ -5,12 +5,11 @@ import com.solplatform.entity.ProjectEntity;
 import com.solplatform.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 项目管理接口
@@ -46,6 +45,14 @@ public class ProjectController {
         }
     }
 
+    /**
+     * 修改项目
+     *
+     * @param projectEntity
+     * @param bindingResult
+     * @param response
+     * @return
+     */
     @PostMapping("/modifyProject")
     public CommonResult<ProjectEntity> modifyProject(@Valid ProjectEntity projectEntity, BindingResult bindingResult, HttpServletResponse response) {
         //  判断是否字段有错误
@@ -57,5 +64,11 @@ public class ProjectController {
             projectService.modifyProject (projectEntity);
             return CommonResult.success (projectEntity);
         }
+    }
+
+    @GetMapping("/getProjectList")
+    public CommonResult<List<ProjectEntity>> getProjectList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "2") int pageSize) {
+        List<ProjectEntity> projectList = projectService.getProjectList (pageNo, pageSize);
+        return CommonResult.success (projectList);
     }
 }
