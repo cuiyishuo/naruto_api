@@ -24,6 +24,7 @@ public class CorsConfig {
         config.addAllowedOrigin ("*");
         // 跨域时允许暴露的接口（前端可以拿到的）
         config.addExposedHeader("Authorization");
+        config.addExposedHeader("total");
         // 如果要限制 HEADER 或 METHOD 请自行更改
         config.addAllowedHeader ("*");
         config.addAllowedMethod ("*");

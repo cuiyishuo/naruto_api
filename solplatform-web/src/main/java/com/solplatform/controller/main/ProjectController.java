@@ -3,6 +3,7 @@ package com.solplatform.controller.main;
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.service.ProjectService;
+import com.solplatform.vo.TablePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -66,9 +67,19 @@ public class ProjectController {
         }
     }
 
+    /**
+     * 查询用户有权限的项目
+     *
+     * @param pageNo   当前页
+     * @param pageSize 每页显示数量
+     * @return
+     */
     @GetMapping("/getProjectList")
-    public CommonResult<List<ProjectEntity>> getProjectList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "2") int pageSize) {
-        List<ProjectEntity> projectList = projectService.getProjectList (pageNo, pageSize);
+    public CommonResult getProjectList(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "2") int pageSize, HttpServletResponse response) {
+        TablePage tablePage = projectService.getProjectList (pageNo, pageSize);
+        // 将total返回到响应头中
+        response.setHeader ("total", tablePage.getTotal ().toString ());
+        List projectList = tablePage.getCurrentPageData ();
         return CommonResult.success (projectList);
     }
 }

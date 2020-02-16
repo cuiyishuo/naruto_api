@@ -6,6 +6,7 @@ import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.ProjectMemberEntity;
 import com.solplatform.mapper.ProjectMapper;
 import com.solplatform.mapper.ProjectMemberMapper;
+import com.solplatform.vo.TablePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,7 @@ public class ProjectService {
         }
     }
 
-    public List<ProjectEntity> getProjectList(Integer pageNo, Integer pageSize) {
+    public TablePage getProjectList(Integer pageNo, Integer pageSize) {
         try {
             // 分页查询
             Page page = PageHelper.startPage (pageNo, pageSize, true);
@@ -77,7 +78,12 @@ public class ProjectService {
             HttpServletRequest request = requestAttributes.getRequest ();
             String userId = (String) request.getSession ().getAttribute ("userId");
             List<ProjectEntity> projectList = projectMapper.getProjectList (userId);
-            return projectList;
+            // 获得分页总数据
+            Long total = page.getTotal ();
+            TablePage tablePage = new TablePage ();
+            tablePage.setTotal (total);
+            tablePage.setCurrentPageData (projectList);
+            return tablePage;
         } catch (Exception e) {
             // 待定
             System.err.println ("查询结果异常");
