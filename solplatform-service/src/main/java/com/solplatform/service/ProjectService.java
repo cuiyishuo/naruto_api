@@ -4,16 +4,15 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.ProjectMemberEntity;
+import com.solplatform.entity.UserEntity;
 import com.solplatform.mapper.ProjectMapper;
 import com.solplatform.mapper.ProjectMemberMapper;
+import com.solplatform.util.SessionUtil;
 import com.solplatform.vo.TablePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -43,9 +42,7 @@ public class ProjectService {
             ProjectMemberEntity projectMemberEntity = new ProjectMemberEntity ();
             projectMemberEntity.setProjectId (projectEntity.getId ());
             // 获取userId
-            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes ();
-            HttpServletRequest request = requestAttributes.getRequest ();
-            String userId = (String) request.getSession ().getAttribute ("userId");
+            String userId = SessionUtil.getSession ("userId");
             System.err.println ("获取到session中的userId为：" + userId);
             // 新建项目成功后将创建人加入到项目成员中
             projectMemberEntity.setUserId (userId);
@@ -69,14 +66,19 @@ public class ProjectService {
         }
     }
 
+    /**
+     * 获得项目列表
+     *
+     * @param pageNo   页码
+     * @param pageSize 每页显示条数
+     * @return
+     */
     public TablePage getProjectList(Integer pageNo, Integer pageSize) {
         try {
+            // 获取userId
+            String userId = SessionUtil.getSession ("userId");
             // 分页查询
             Page page = PageHelper.startPage (pageNo, pageSize, true);
-            // 获取userId
-            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes ();
-            HttpServletRequest request = requestAttributes.getRequest ();
-            String userId = (String) request.getSession ().getAttribute ("userId");
             List<ProjectEntity> projectList = projectMapper.getProjectList (userId);
             // 获得分页总数据
             Long total = page.getTotal ();
@@ -87,7 +89,50 @@ public class ProjectService {
         } catch (Exception e) {
             // 待定
             System.err.println ("查询结果异常");
-            return null;
+            throw new RuntimeException ("查询结果异常");
+        }
+    }
+
+    /**
+     * 新增项目成员
+     *
+     * @param projectId
+     */
+    public void addProjectMember(String projectId, String userId) {
+        try {
+            ProjectMemberEntity projectMemberEntity = new ProjectMemberEntity ();
+            projectMemberEntity.setProjectId (projectId);
+            projectMemberEntity.setUserId (userId);
+            projectMemberMapper.addProjectMember (projectMemberEntity);
+        } catch (Exception e) {
+            System.err.println ("新增项目成员异常");
+            throw new RuntimeException ("新增项目成员异常");
+        }
+    }
+
+    /**
+     * 获得项目成员列表
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param projectId 项目id
+     * @return
+     */
+    public TablePage getProjectMember(Integer pageNo, Integer pageSize, String projectId) {
+        try {
+            // 分页查询
+            Page page = PageHelper.startPage (pageNo, pageSize, true);
+            List<UserEntity> userList = projectMapper.getProjectMemberList (projectId);
+            // 获得分页总数据
+            Long total = page.getTotal ();
+            TablePage tablePage = new TablePage ();
+            tablePage.setTotal (total);
+            tablePage.setCurrentPageData (userList);
+            return tablePage;
+        } catch (Exception e) {
+            // 待定
+            System.err.println ("查询结果异常");
+            throw new RuntimeException ("查询结果异常");
         }
     }
 }

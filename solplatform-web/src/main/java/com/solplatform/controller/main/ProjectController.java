@@ -82,4 +82,35 @@ public class ProjectController {
         List projectList = tablePage.getCurrentPageData ();
         return CommonResult.success (projectList);
     }
+
+    /**
+     * 新增项目成员
+     *
+     * @param projectId 项目id
+     * @param userId    用户id
+     * @return
+     */
+    @PostMapping("/addProjectMember/{projectId}")
+    public CommonResult<ProjectEntity> addProjectMember(@PathVariable String projectId, String userId) {
+        projectService.addProjectMember (projectId, userId);
+        return CommonResult.success ();
+    }
+
+    /**
+     * 获得项目成员列表
+     *
+     * @param projectId 项目id
+     * @param pageNo
+     * @param pageSize
+     * @param response
+     * @return
+     */
+    @GetMapping("/getProjectMemberList/{projectId}")
+    public CommonResult getProjectMemberList(@PathVariable String projectId, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize, HttpServletResponse response) {
+        TablePage tablePage = projectService.getProjectMember (pageNo, pageSize, projectId);
+        // 将total返回到响应头中
+        response.setHeader ("total", tablePage.getTotal ().toString ());
+        List projectMemberList = tablePage.getCurrentPageData ();
+        return CommonResult.success (projectMemberList);
+    }
 }

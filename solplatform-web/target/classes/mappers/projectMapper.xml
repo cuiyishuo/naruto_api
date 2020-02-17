@@ -31,10 +31,25 @@
         left join project p
         on pm.project_id=p.id
         where pm.user_id=#{0}
+        and p.yn=0 and pm.yn=0
     </select>
     <resultMap id="projectMap" type="com.solplatform.entity.ProjectEntity">
         <result property="id" column="id"/>
         <result property="projectName" column="project_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="getProjectMemberList" resultMap="userMap" parameterType="java.lang.String">
+        select u.id,u.user_name,u.create_time from project_member pm
+        left join user u
+        on pm.user_id=u.id
+        where pm.project_id=#{0}
+        and u.yn=0 and pm.yn=0
+    </select>
+    <resultMap id="userMap" type="com.solplatform.entity.UserEntity">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
