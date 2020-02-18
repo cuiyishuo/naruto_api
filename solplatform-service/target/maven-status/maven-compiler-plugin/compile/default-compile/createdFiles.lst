@@ -1,6 +1,7 @@
+com/solplatform/util/SessionUtil.class
+com/solplatform/common/CommonResult.class
 com/solplatform/vo/TablePage.class
 com/solplatform/service/ProjectService.class
-com/solplatform/util/SessionUtil.class
+com/solplatform/vo/UserVo.class
 com/solplatform/common/CodeMsg.class
-com/solplatform/common/CommonResult.class
 com/solplatform/service/UserService.class

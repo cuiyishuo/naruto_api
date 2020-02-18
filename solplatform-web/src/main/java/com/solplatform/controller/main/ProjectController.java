@@ -3,11 +3,14 @@ package com.solplatform.controller.main;
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.service.ProjectService;
+import com.solplatform.util.DozerConvertor;
 import com.solplatform.vo.TablePage;
+import com.solplatform.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
@@ -21,8 +24,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/main")
 public class ProjectController {
+
     @Autowired
     ProjectService projectService;
+    @Resource
+    DozerConvertor dozerConvertor;
+
 
     /**
      * 创建新项目
@@ -110,7 +117,10 @@ public class ProjectController {
         TablePage tablePage = projectService.getProjectMember (pageNo, pageSize, projectId);
         // 将total返回到响应头中
         response.setHeader ("total", tablePage.getTotal ().toString ());
+        // 获取页面数据
         List projectMemberList = tablePage.getCurrentPageData ();
-        return CommonResult.success (projectMemberList);
+        // 将po转vo
+        List projectMemberListVo = dozerConvertor.convertor (projectMemberList, UserVo.class);
+        return CommonResult.success (projectMemberListVo);
     }
 }

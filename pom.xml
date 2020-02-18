@@ -44,8 +44,17 @@
                 <artifactId>lombok-maven-plugin</artifactId>
                 <version>1.16.18.1</version>
             </dependency>
+            <!--dozer -->
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer-spring</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>5.5.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-
 </project>

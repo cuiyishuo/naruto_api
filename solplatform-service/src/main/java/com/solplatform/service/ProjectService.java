@@ -74,23 +74,19 @@ public class ProjectService {
      * @return
      */
     public TablePage getProjectList(Integer pageNo, Integer pageSize) {
-        try {
-            // 获取userId
-            String userId = SessionUtil.getSession ("userId");
-            // 分页查询
-            Page page = PageHelper.startPage (pageNo, pageSize, true);
-            List<ProjectEntity> projectList = projectMapper.getProjectList (userId);
-            // 获得分页总数据
-            Long total = page.getTotal ();
-            TablePage tablePage = new TablePage ();
-            tablePage.setTotal (total);
-            tablePage.setCurrentPageData (projectList);
-            return tablePage;
-        } catch (Exception e) {
-            // 待定
-            System.err.println ("查询结果异常");
-            throw new RuntimeException ("查询结果异常");
-        }
+
+        // 获取userId
+        String userId = SessionUtil.getSession ("userId");
+        // 分页查询
+        Page page = PageHelper.startPage (pageNo, pageSize, true);
+        List<ProjectEntity> projectList = projectMapper.getProjectList (userId);
+        // 获得分页总数据
+        Long total = page.getTotal ();
+        TablePage tablePage = new TablePage ();
+        tablePage.setTotal (total);
+        tablePage.setCurrentPageData (projectList);
+        return tablePage;
+
     }
 
     /**
@@ -99,15 +95,12 @@ public class ProjectService {
      * @param projectId
      */
     public void addProjectMember(String projectId, String userId) {
-        try {
-            ProjectMemberEntity projectMemberEntity = new ProjectMemberEntity ();
-            projectMemberEntity.setProjectId (projectId);
-            projectMemberEntity.setUserId (userId);
-            projectMemberMapper.addProjectMember (projectMemberEntity);
-        } catch (Exception e) {
-            System.err.println ("新增项目成员异常");
-            throw new RuntimeException ("新增项目成员异常");
-        }
+
+        ProjectMemberEntity projectMemberEntity = new ProjectMemberEntity ();
+        projectMemberEntity.setProjectId (projectId);
+        projectMemberEntity.setUserId (userId);
+        projectMemberMapper.addProjectMember (projectMemberEntity);
+
     }
 
     /**
@@ -119,20 +112,16 @@ public class ProjectService {
      * @return
      */
     public TablePage getProjectMember(Integer pageNo, Integer pageSize, String projectId) {
-        try {
-            // 分页查询
-            Page page = PageHelper.startPage (pageNo, pageSize, true);
-            List<UserEntity> userList = projectMapper.getProjectMemberList (projectId);
-            // 获得分页总数据
-            Long total = page.getTotal ();
-            TablePage tablePage = new TablePage ();
-            tablePage.setTotal (total);
-            tablePage.setCurrentPageData (userList);
-            return tablePage;
-        } catch (Exception e) {
-            // 待定
-            System.err.println ("查询结果异常");
-            throw new RuntimeException ("查询结果异常");
-        }
+
+        // 分页查询
+        Page page = PageHelper.startPage (pageNo, pageSize, true);
+        List<UserEntity> userList = projectMapper.getProjectMemberList (projectId);
+        // 获得分页总数据
+        Long total = page.getTotal ();
+        TablePage tablePage = new TablePage ();
+        tablePage.setTotal (total);
+        tablePage.setCurrentPageData (userList);
+        return tablePage;
+
     }
 }

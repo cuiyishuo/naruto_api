@@ -1,5 +1,7 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/interceptor/AuthInterceptor.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/configure/DozerBeanMapperConfigure.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/exception/WebExceptionHandler.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/util/DozerConvertor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/configure/CorsConfig.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/interceptor/InterceptorConfig.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/main/ProjectController.java

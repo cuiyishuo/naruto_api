@@ -1,8 +1,10 @@
+com/solplatform/SpringbootApplication.class
+com/solplatform/interceptor/InterceptorConfig.class
+com/solplatform/util/DozerConvertor.class
 com/solplatform/controller/main/LoginController.class
 com/solplatform/controller/main/ProjectController.class
-com/solplatform/SpringbootApplication.class
 com/solplatform/exception/WebExceptionHandler.class
 com/solplatform/configure/CorsConfig.class
+com/solplatform/configure/DozerBeanMapperConfigure.class
 com/solplatform/controller/main/RegisterController.class
 com/solplatform/interceptor/AuthInterceptor.class
-com/solplatform/interceptor/InterceptorConfig.class
