@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.ProjectMemberEntity;
 import com.solplatform.entity.UserEntity;
+import com.solplatform.exception.BusinessException;
 import com.solplatform.mapper.ProjectMapper;
 import com.solplatform.mapper.ProjectMemberMapper;
 import com.solplatform.util.SessionUtil;
@@ -132,6 +133,12 @@ public class ProjectService {
      */
     public void deleteProject(String projectId) {
 
-        projectMapper.deleteProject (projectId);
+        try {
+            int[] a = new int[3];
+            System.out.println (a[4]);
+            projectMapper.deleteProject (projectId);
+        } catch (Exception e) {
+            throw new BusinessException ("删除项目异常", 400);
+        }
     }
 }

@@ -44,6 +44,18 @@ public class WebExceptionHandler {
     }
 
     /**
+     * 自定义的业务异常
+     *
+     * @return
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = BusinessException.class)
+    public CommonResult BusinessException(BusinessException e) {
+        System.err.println (" 业务异常信息:" + e.getMessage () + LocalTime.now ());
+        return CommonResult.failed (e.getMessage ());
+    }
+
+    /**
      * 处理所有不可知的异常
      *
      * @param e
