@@ -3,6 +3,7 @@ package com.solplatform.mapper;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -19,4 +20,8 @@ public interface ProjectMapper {
 
     // 获取项目成员
     List<UserEntity> getProjectMemberList(String projectId);
+
+    // 删除项目
+    @Update ("update project set yn=-1 where id=#{0}")
+    int deleteProject(String projectId);
 }

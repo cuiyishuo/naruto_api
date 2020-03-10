@@ -39,13 +39,13 @@ public class UserService {
      * @param userEntity
      * @return
      */
-    public String checkUser(UserEntity userEntity) {
+    public UserEntity checkUser(UserEntity userEntity) {
         UserEntity userEntityDB = userMapper.checkUser (userEntity);
         // 判断是否可以查到用户信息,查到了则返回用户id
         if (userEntityDB == null) {
-            return "";
+            return null;
         } else {
-            return userEntityDB.getId ();
+            return userEntityDB;
         }
     }
 }

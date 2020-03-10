@@ -3,6 +3,8 @@ package com.solplatform.controller.main;
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.UserEntity;
 import com.solplatform.service.UserService;
+import com.solplatform.util.DozerConvertor;
+import com.solplatform.vo.UserVo;
 import jdk.nashorn.internal.ir.ReturnNode;
 import org.apache.coyote.http11.upgrade.UpgradeServletOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,6 +29,8 @@ import javax.validation.Valid;
 public class LoginController {
     @Autowired
     UserService userService;
+    @Resource
+    DozerConvertor dozerConvertor;
 
     /**
      * 登录接口
@@ -36,7 +41,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/login")
-    public CommonResult<UserEntity> login(@Valid UserEntity userEntity, BindingResult bindingResult, HttpServletResponse response, HttpSession httpSession) {
+    public CommonResult login(@Valid UserEntity userEntity, BindingResult bindingResult, HttpServletResponse response, HttpSession httpSession) {
         //  判断是否字段有错误
         if (bindingResult.hasErrors ()) {
             System.err.println ("参数有问题");
@@ -44,17 +49,22 @@ public class LoginController {
             response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
             return CommonResult.failed (errMsg);
         } else {
-            String userId = userService.checkUser (userEntity);
-            if (userId.isEmpty ()) {
+//            String userId = userService.checkUser (userEntity);
+            if (null == userService.checkUser (userEntity)) {
                 response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
                 return CommonResult.failed ("用户不存在");
             } else {
+                UserEntity userEntityPo = userService.checkUser (userEntity);
                 // 登录成功，将userId存储到session中
-                httpSession.setAttribute ("userId", userId);
+                httpSession.setAttribute ("userId", userEntityPo.getId ());
+                // 设置超时时间，0为永久
+                httpSession.setMaxInactiveInterval(0);
                 // 登录成功后设置token,将token放到响应头中返回
-                String authToken = "Bearer " + userEntity.getUserName () + userEntity.getPassword () + ".xxx.zzz";
+                String authToken = "Bearer " + userEntityPo.getUserName () + userEntityPo.getPassword () + ".xxx.zzz";
                 response.setHeader ("Authorization", authToken);
-                return CommonResult.success (userEntity);
+                // po转为vo
+                UserVo userVo = dozerConvertor.convertor (userEntityPo, UserVo.class);
+                return CommonResult.success (userVo);
             }
         }
     }

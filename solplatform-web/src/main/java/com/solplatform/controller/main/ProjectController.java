@@ -2,10 +2,13 @@ package com.solplatform.controller.main;
 
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.ProjectEntity;
+import com.solplatform.entity.UserEntity;
 import com.solplatform.service.ProjectService;
 import com.solplatform.util.DozerConvertor;
+import com.solplatform.vo.ProjectVo;
 import com.solplatform.vo.TablePage;
 import com.solplatform.vo.UserVo;
+import com.sun.org.apache.bcel.internal.generic.ReturnInstruction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -86,8 +89,10 @@ public class ProjectController {
         TablePage tablePage = projectService.getProjectList (pageNo, pageSize);
         // 将total返回到响应头中
         response.setHeader ("total", tablePage.getTotal ().toString ());
-        List projectList = tablePage.getCurrentPageData ();
-        return CommonResult.success (projectList);
+        List<ProjectEntity> projectList = tablePage.getCurrentPageData ();
+        // 将po转vo
+        List<ProjectVo> projectListVo = dozerConvertor.convertor (projectList, ProjectVo.class);
+        return CommonResult.success (projectListVo);
     }
 
     /**
@@ -118,9 +123,15 @@ public class ProjectController {
         // 将total返回到响应头中
         response.setHeader ("total", tablePage.getTotal ().toString ());
         // 获取页面数据
-        List projectMemberList = tablePage.getCurrentPageData ();
+        List<UserEntity> projectMemberList = tablePage.getCurrentPageData ();
         // 将po转vo
-        List projectMemberListVo = dozerConvertor.convertor (projectMemberList, UserVo.class);
+        List<UserVo> projectMemberListVo = dozerConvertor.convertor (projectMemberList, UserVo.class);
         return CommonResult.success (projectMemberListVo);
+    }
+
+    @PostMapping("/deleteProject/{projectId}")
+    public CommonResult deleteProject(@PathVariable String projectId) {
+        projectService.deleteProject (projectId);
+        return CommonResult.success ("删除成功");
     }
 }

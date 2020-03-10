@@ -1,4 +1,5 @@
 com/solplatform/util/SessionUtil.class
+com/solplatform/vo/ProjectVo.class
 com/solplatform/common/CommonResult.class
 com/solplatform/vo/TablePage.class
 com/solplatform/service/ProjectService.class

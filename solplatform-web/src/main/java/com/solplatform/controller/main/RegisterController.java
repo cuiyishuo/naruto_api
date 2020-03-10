@@ -43,6 +43,8 @@ public class RegisterController {
             // 成功后将id保存到sesstion中
             String userId = userEntity.getId ();
             httpSession.setAttribute ("userId", userId);
+            // 设置超时时间，0为永久
+            httpSession.setMaxInactiveInterval(0);
             // 注册成功后设置token,将token放到响应头中返回
             String authToken = "Bearer " + userEntity.getUserName () + userEntity.getPassword () + ".xxx.zzz";
             response.setHeader ("Authorization", authToken);

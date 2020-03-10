@@ -16,7 +16,7 @@
     <update id="modifyProject" parameterType="com.solplatform.entity.ProjectEntity">
         update project
         <set>
-            <if test="projecrName != null">
+            <if test="projectName != null">
                 project_name=#{projectName},
             </if>
             <if test="yn != null">
@@ -32,6 +32,7 @@
         on pm.project_id=p.id
         where pm.user_id=#{0}
         and p.yn=0 and pm.yn=0
+        order by p.create_time desc
     </select>
     <resultMap id="projectMap" type="com.solplatform.entity.ProjectEntity">
         <result property="id" column="id"/>

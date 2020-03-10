@@ -1,7 +1,6 @@
 package com.solplatform.vo;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 import org.dozer.Mapping;
 
 

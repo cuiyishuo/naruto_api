@@ -124,4 +124,14 @@ public class ProjectService {
         return tablePage;
 
     }
+
+    /**
+     * 删除项目
+     *
+     * @param projectId
+     */
+    public void deleteProject(String projectId) {
+
+        projectMapper.deleteProject (projectId);
+    }
 }
