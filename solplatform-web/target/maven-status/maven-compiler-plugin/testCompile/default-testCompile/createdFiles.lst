@@ -1,4 +1,5 @@
 com/solplatform/testservice/TestProjectService.class
+com/solplatform/testservice/TestUtilService.class
 com/solplatform/testentity/TestUserMapper.class
 com/solplatform/testentity/TestProjectMemberMapper.class
 com/solplatform/testservice/TestUserService.class

@@ -50,6 +50,10 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.3.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.3.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.47" level="project" />
     <orderEntry type="module" module-name="solplatform-entity" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.15" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.6.1" level="project" />

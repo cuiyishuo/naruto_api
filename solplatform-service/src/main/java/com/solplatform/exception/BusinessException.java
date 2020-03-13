@@ -8,20 +8,9 @@ package com.solplatform.exception;
  * @create 2020-03-10  16:38
  */
 public class BusinessException extends RuntimeException{
-    private Integer code;
-
-
-    public BusinessException(String message, Integer code) {
+    // 简单的传入异常信息即可
+    public BusinessException(String message) {
         super (message);
-        this.code = code;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 
 }

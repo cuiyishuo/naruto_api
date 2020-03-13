@@ -3,5 +3,6 @@ com/solplatform/mapper/ProjectMemberMapper.class
 com/solplatform/mapper/UserMapper.class
 com/solplatform/entity/ProjectMemberEntity.class
 com/solplatform/mapper/ProjectMapper.class
+com/solplatform/entity/HttpEntity.class
 com/solplatform/entity/BaseEntity.class
 com/solplatform/entity/UserEntity.class

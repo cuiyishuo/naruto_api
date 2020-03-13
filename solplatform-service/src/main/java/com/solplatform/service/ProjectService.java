@@ -134,11 +134,9 @@ public class ProjectService {
     public void deleteProject(String projectId) {
 
         try {
-            int[] a = new int[3];
-            System.out.println (a[4]);
             projectMapper.deleteProject (projectId);
         } catch (Exception e) {
-            throw new BusinessException ("删除项目异常", 400);
+            throw new BusinessException ("删除项目异常");
         }
     }
 }
