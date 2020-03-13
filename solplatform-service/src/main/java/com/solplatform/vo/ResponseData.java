@@ -16,7 +16,7 @@ public class ResponseData {
     // 响应头
     private Map headers;
     // 响应体
-    private List<Map<String,String>> body;
+    private List<Map<String,Object>> body;
     // 响应状态码
     private int statusCode;
 }

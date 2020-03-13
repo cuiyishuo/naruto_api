@@ -2,7 +2,6 @@ package com.solplatform.controller.testutil;
 
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.HttpEntity;
-import com.solplatform.service.UserService;
 import com.solplatform.service.UtilService;
 import com.solplatform.util.DozerConvertor;
 import com.solplatform.vo.ResponseData;

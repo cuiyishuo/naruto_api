@@ -102,14 +102,14 @@ public class UtilService {
         ResponseData responseData = new ResponseData ();
         responseData.setStatusCode (response.getStatusLine ().getStatusCode ());
         // 响应体
-        List<Map<String, String>> entityList = null;
+        List<Map<String, Object>> entityList = null;
         try {
             String entityStr = EntityUtils.toString (response.getEntity ());
             if (!StringUtils.isEmpty (entityStr)) {
                 if (!entityStr.endsWith ("]"))
                     entityStr = "[" + entityStr + "]";
             }
-            entityList = JSON.parseObject (entityStr, new TypeReference<List<Map<String, String>>> () {
+            entityList = JSON.parseObject (entityStr, new TypeReference<List<Map<String, Object>>> () {
             });
         } catch (IOException e) {
             throw new BusinessException ("获取响应体异常:" + e.getMessage ());
@@ -186,14 +186,14 @@ public class UtilService {
         ResponseData responseData = new ResponseData ();
         responseData.setStatusCode (response.getStatusLine ().getStatusCode ());
         // 响应体
-        List<Map<String, String>> entityList = null;
+        List<Map<String, Object>> entityList = null;
         try {
             String entityStr = EntityUtils.toString (response.getEntity ());
             if (!StringUtils.isEmpty (entityStr)) {
                 if (!entityStr.endsWith ("]"))
                     entityStr = "[" + entityStr + "]";
             }
-            entityList = JSON.parseObject (entityStr, new TypeReference<List<Map<String, String>>> () {
+            entityList = JSON.parseObject (entityStr, new TypeReference<List<Map<String, Object>>> () {
             });
         } catch (IOException e) {
             throw new BusinessException ("获取响应体异常:" + e.getMessage ());
