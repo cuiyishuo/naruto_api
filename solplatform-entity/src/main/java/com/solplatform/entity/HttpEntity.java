@@ -20,7 +20,7 @@ public class HttpEntity extends BaseEntity{
     private String host;
     @NotBlank(message = "接口地址不能为空")
     private String apiUrl;
-    private Map<String,String> headers;
+    private String headers;
     @NotBlank(message = "超时时间不能为空")
     private String timeOut;
     private String params;

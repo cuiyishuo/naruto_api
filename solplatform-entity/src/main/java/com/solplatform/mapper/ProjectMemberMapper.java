@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProjectMemberMapper {
     // 新增项目成员
     int addProjectMember(ProjectMemberEntity projectMemberEntity);
+
 }

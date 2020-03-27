@@ -64,6 +64,9 @@ public class LoginController {
                 response.setHeader ("Authorization", authToken);
                 // po转为vo
                 UserVo userVo = dozerConvertor.convertor (userEntityPo, UserVo.class);
+
+                // 将用户的lastprojectid保存到sesstion中
+                httpSession.setAttribute ("lastProjectId",userEntity.getLastProjectId ());
                 return CommonResult.success (userVo);
             }
         }

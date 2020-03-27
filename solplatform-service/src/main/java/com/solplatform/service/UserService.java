@@ -1,7 +1,12 @@
 package com.solplatform.service;
 
+import com.solplatform.entity.ProjectEntity;
+import com.solplatform.entity.ProjectMemberEntity;
 import com.solplatform.entity.UserEntity;
+import com.solplatform.exception.BusinessException;
+import com.solplatform.mapper.ProjectMemberMapper;
 import com.solplatform.mapper.UserMapper;
+import com.solplatform.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -46,6 +51,38 @@ public class UserService {
             return null;
         } else {
             return userEntityDB;
+        }
+    }
+
+    /**
+     * 修改用户最后登录项目
+     *
+     * @param userEntity
+     */
+    public void modifyUser(UserEntity userEntity) {
+        try {
+            // 获取userId
+            String userId = SessionUtil.getSession ("userId");
+            userEntity.setId (userId);
+            userMapper.modifyLastProjectId (userEntity);
+        } catch (BusinessException e) {
+            throw new BusinessException ("修改用户lastProjectId异常");
+        }
+    }
+
+    /**
+     * 获取lastProjectId
+     *
+     * @return
+     */
+    public String getLastProjectId() {
+        try {
+            // 获取userId
+            String userId = SessionUtil.getSession ("userId");
+            UserEntity resultUser = userMapper.selectLastProjectId (userId);
+            return resultUser.getLastProjectId ();
+        } catch (BusinessException e) {
+            throw new BusinessException ("获取lastProjectId异常");
         }
     }
 }

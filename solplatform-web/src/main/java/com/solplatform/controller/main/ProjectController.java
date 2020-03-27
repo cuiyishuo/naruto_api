@@ -4,17 +4,18 @@ import com.solplatform.common.CommonResult;
 import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.UserEntity;
 import com.solplatform.service.ProjectService;
+import com.solplatform.service.UserService;
 import com.solplatform.util.DozerConvertor;
 import com.solplatform.vo.ProjectVo;
 import com.solplatform.vo.TablePage;
 import com.solplatform.vo.UserVo;
-import com.sun.org.apache.bcel.internal.generic.ReturnInstruction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class ProjectController {
 
     @Autowired
     ProjectService projectService;
+    @Autowired
+    UserService userService;
     @Resource
     DozerConvertor dozerConvertor;
 
@@ -129,9 +132,36 @@ public class ProjectController {
         return CommonResult.success (projectMemberListVo);
     }
 
+    /**
+     * 删除项目
+     *
+     * @param projectId
+     * @return
+     */
     @PostMapping("/deleteProject/{projectId}")
     public CommonResult deleteProject(@PathVariable String projectId) {
         projectService.deleteProject (projectId);
         return CommonResult.success ("删除成功");
     }
+
+    /**
+     * 修改用户的最后使用的项目id
+     *
+     * @param userEntity
+     * @param httpSession
+     * @return
+     */
+    @PostMapping("/modifyCurrentId")
+    public CommonResult modifyCurrentId(UserEntity userEntity, HttpSession httpSession) {
+        userService.modifyUser (userEntity);
+        httpSession.setAttribute ("lastProjectId", userEntity.getLastProjectId ());
+        return CommonResult.success ("修改当前项目成功");
+    }
+
+    @GetMapping("/getLastProjectId")
+    public CommonResult getLastProjectId(){
+        String lastProjectId = userService.getLastProjectId ();
+        return CommonResult.success (lastProjectId);
+    }
+
 }

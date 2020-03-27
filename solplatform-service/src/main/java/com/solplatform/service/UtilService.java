@@ -47,8 +47,9 @@ public class UtilService {
         CloseableHttpClient httpClient = HttpClients.createDefault ();
         URI uri = null;
         List<NameValuePair> paramsList = new ArrayList<NameValuePair> ();
-        Map<String, String> paramsMap = new HashMap<String, String> ();
-        Map<String, String> headers = httpEntity.getHeaders ();
+        Map<String, String> paramsMap;
+        Map<String, String> headerMap;
+        String headers = httpEntity.getHeaders ();
         String params = httpEntity.getParams ();
 
 
@@ -66,6 +67,7 @@ public class UtilService {
                     .setHost (httpEntity.getHost ())
                     .setPath (httpEntity.getApiUrl ())
                     .addParameters (paramsList)
+                    .setParameter ("debug", "1")
                     .build ();
         } catch (URISyntaxException e) {
             throw new BusinessException ("创建httpclient异常:" + e.getMessage ());
@@ -75,7 +77,8 @@ public class UtilService {
         // 配置请求信息-headers
         // 将map格式的headers转换成uribuilder支持的键值对格式
         if (!StringUtils.isEmpty (headers)) {
-            for (Map.Entry<String, String> header : headers.entrySet ()) {
+            headerMap = JSON.parseObject (headers,new TypeReference<Map<String, String>> (){});
+            for (Map.Entry<String, String> header : headerMap.entrySet ()) {
                 httpGet.addHeader (header.getKey (), header.getValue ());
             }
         }
@@ -132,8 +135,9 @@ public class UtilService {
     public ResponseData invokePost(HttpEntity httpEntity) {
 
         CloseableHttpClient httpClient = HttpClients.createDefault ();
+        Map<String, String> paramsMap;
         URI uri;
-        Map<String, String> headers = httpEntity.getHeaders ();
+        String headers = httpEntity.getHeaders ();
         String body = httpEntity.getBody ();
 
         // 配置请求信息
@@ -158,7 +162,8 @@ public class UtilService {
         // 配置请求信息-headers
         // 将map格式的headers转换成uribuilder支持的键值对格式
         if (!StringUtils.isEmpty (headers)) {
-            for (Map.Entry<String, String> header : headers.entrySet ()) {
+            paramsMap = JSON.parseObject (headers,new TypeReference<Map<String, String>> (){});
+            for (Map.Entry<String, String> header : paramsMap.entrySet ()) {
                 httpPost.addHeader (header.getKey (), header.getValue ());
             }
         }

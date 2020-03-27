@@ -7,27 +7,17 @@
         <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
             select REPLACE(UUID(),'-','')
         </selectKey>
-        insert into user (id,user_name,password,create_time,update_time)
-        values (#{id},#{userName},#{password},now(),now())
+        insert into user (id,user_name,password,create_time,update_time,last_project_id)
+        values (#{id},#{userName},#{password},now(),now(),#{lastProjectId})
     </insert>
 
-    <select id="selectUser" resultType="com.solplatform.entity.UserEntity">
-        select * from user
-    </select>
-
-    <sql id="title">id,user_name,password,create_time,update_time</sql>
-    <select id="selectUserBy" resultType="com.solplatform.entity.UserEntity">
+    <sql id="title"> id,user_name,password,create_time,update_time,last_project_id </sql>
+    <select id="selectLastProjectId" parameterType="java.lang.String" resultMap="userMap">
         select
         <include refid="title"/>
         from user
         <where>
-            1=1
-            <if test="userName != null">
-                and user_name = #{userName}
-            </if>
-            <if test="password != null">
-                and password = #{password}
-            </if>
+            and id = #{0}
         </where>
     </select>
 
@@ -43,5 +33,20 @@
         <result property="password" column="password"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="lastProjectId" column="last_project_id"/>
     </resultMap>
+
+    <!--通过set标签，哪个字段有值更新哪个字段-->
+    <update id="modifyLastProjectId" parameterType="com.solplatform.entity.UserEntity">
+        update user
+        <set>
+            <if test="lastProjectId != null">
+                last_project_id=#{lastProjectId},
+            </if>
+            <if test="password != null">
+                password=#{password}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>

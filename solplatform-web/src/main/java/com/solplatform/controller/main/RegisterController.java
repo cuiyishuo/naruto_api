@@ -2,6 +2,7 @@ package com.solplatform.controller.main;
 
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.UserEntity;
+import com.solplatform.service.ProjectService;
 import com.solplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,8 @@ import javax.validation.Valid;
 public class RegisterController {
     @Autowired
     UserService userService;
+    @Autowired
+    ProjectService projectService;
 
     /**
      * 注册接口
@@ -48,6 +51,12 @@ public class RegisterController {
             // 注册成功后设置token,将token放到响应头中返回
             String authToken = "Bearer " + userEntity.getUserName () + userEntity.getPassword () + ".xxx.zzz";
             response.setHeader ("Authorization", authToken);
+
+            // 注册成功的话，初始化用户项目
+            String initProjectId = userEntity.getLastProjectId ();
+            projectService.addProjectMember (initProjectId,userId);
+            // 将用户的lastprojectid保存到sesstion中
+            httpSession.setAttribute ("lastProjectId",userEntity.getLastProjectId ());
             return CommonResult.success (userEntity);
         }
     }
