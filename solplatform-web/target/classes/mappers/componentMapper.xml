@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
+<mapper namespace="com.solplatform.mapper.ComponentMapper">
+
+    <insert id="addComponent" parameterType="com.solplatform.entity.HttpEntity">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into interface
+        (id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params)
+        values
+        (#{id},#{interfaceName},#{methods},#{headers},#{host},#{componentType},now(),now(),#{projectId},#{apiUrl},#{body},#{timeOut},#{params})
+    </insert>
+
+    <sql id="componentCol"> id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params </sql>
+    <select id="findComponentBy" parameterType="com.solplatform.entity.HttpEntity" resultMap="componentMap">
+        select
+        <include refid="componentCol"/>
+        from interface
+        <where>
+            <if test="projectId != null">
+                project_id = #{projectId}
+            </if>
+            <if test="componentType != null">
+                AND component_type = #{componentType}
+            </if>
+            <if test="interfaceName != null">
+                AND interface_name like #{interfaceName}
+            </if>
+        </where>
+    </select>
+    <resultMap id="componentMap" type="com.solplatform.entity.HttpEntity">
+        <result property="id" column="id"/>
+        <result property="interfaceName" column="interface_name"/>
+        <result property="methods" column="methods"/>
+        <result property="apiUrl" column="api_url"/>
+        <result property="apiUrl" column="api_url"/>
+        <result property="componentType" column="component_type"/>
+        <result property="projectId" column="project_id"/>
+        <result property="timeOut" column="time_out"/>
+        <result property="headers" column="headers"/>
+        <result property="body" column="body"/>
+        <result property="params" column="params"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+</mapper>

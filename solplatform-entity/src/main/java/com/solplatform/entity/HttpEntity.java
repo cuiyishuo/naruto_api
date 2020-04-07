@@ -14,6 +14,7 @@ import java.util.Map;
  */
 @Data
 public class HttpEntity extends BaseEntity{
+    private String interfaceName;
     @NotBlank(message = "请求方法不能为空")
     private String methods;
     @NotBlank(message = "host不能为空")
@@ -25,4 +26,6 @@ public class HttpEntity extends BaseEntity{
     private String timeOut;
     private String params;
     private String body;
+    private String componentType;
+    private String projectId;
 }

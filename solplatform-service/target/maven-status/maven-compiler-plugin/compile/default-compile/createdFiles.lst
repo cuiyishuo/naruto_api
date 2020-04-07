@@ -1,11 +1,13 @@
 com/solplatform/util/SessionUtil.class
 com/solplatform/service/UtilService.class
 com/solplatform/common/CommonResult.class
+com/solplatform/service/ComponentService.class
 com/solplatform/exception/BusinessException.class
 com/solplatform/service/UtilService$1.class
 com/solplatform/service/UtilService$5.class
 com/solplatform/vo/ResponseData.class
 com/solplatform/vo/ProjectVo.class
+com/solplatform/vo/component/HttpVo.class
 com/solplatform/service/UtilService$2.class
 com/solplatform/service/UtilService$4.class
 com/solplatform/vo/TablePage.class

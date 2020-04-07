@@ -1,4 +1,5 @@
 com/solplatform/entity/ProjectEntity.class
+com/solplatform/mapper/ComponentMapper.class
 com/solplatform/mapper/ProjectMemberMapper.class
 com/solplatform/mapper/UserMapper.class
 com/solplatform/entity/ProjectMemberEntity.class
