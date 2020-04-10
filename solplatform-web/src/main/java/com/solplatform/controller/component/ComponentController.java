@@ -55,4 +55,18 @@ public class ComponentController {
         List httpComponentListVo = dozerConvertor.convertor (componentList, HttpVo.class);
         return CommonResult.success (httpComponentListVo);
     }
+
+    @PatchMapping("/updateComponent")
+    public CommonResult updateComponent(@Valid HttpEntity httpEntity, BindingResult bindingResult, HttpServletResponse response) {
+        //  判断是否字段有错误
+        if (bindingResult.hasErrors ()) {
+            System.err.println ("参数有问题");
+            String errMsg = bindingResult.getFieldError ().getDefaultMessage ();
+            response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
+            return CommonResult.failed (errMsg);
+        } else {
+            componentService.updateCOmponent (httpEntity);
+            return CommonResult.success (httpEntity);
+        }
+    }
 }

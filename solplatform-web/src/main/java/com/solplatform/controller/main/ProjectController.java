@@ -158,6 +158,10 @@ public class ProjectController {
         return CommonResult.success ("修改当前项目成功");
     }
 
+    /**
+     * 获得用户最后使用的项目id
+     * @return
+     */
     @GetMapping("/getLastProjectId")
     public CommonResult getLastProjectId(){
         String lastProjectId = userService.getLastProjectId ();

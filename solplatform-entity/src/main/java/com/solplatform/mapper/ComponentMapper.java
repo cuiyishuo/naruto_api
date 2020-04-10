@@ -12,4 +12,7 @@ public interface ComponentMapper {
 
     // 查询接口
     List<HttpEntity> findComponentBy(HttpEntity httpEntity);
+
+    // 更新接口
+    int updateComponent(HttpEntity httpEntity);
 }

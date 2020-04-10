@@ -29,6 +29,9 @@
             <if test="interfaceName != null">
                 AND interface_name like #{interfaceName}
             </if>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
         </where>
     </select>
     <resultMap id="componentMap" type="com.solplatform.entity.HttpEntity">
@@ -36,7 +39,7 @@
         <result property="interfaceName" column="interface_name"/>
         <result property="methods" column="methods"/>
         <result property="apiUrl" column="api_url"/>
-        <result property="apiUrl" column="api_url"/>
+        <result property="host" column="host"/>
         <result property="componentType" column="component_type"/>
         <result property="projectId" column="project_id"/>
         <result property="timeOut" column="time_out"/>
@@ -47,5 +50,47 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+    <update id="updateComponent" parameterType="com.solplatform.entity.HttpEntity">
+        update interface
+        <set>
+            <if test="interfaceName != null">
+                interface_name = #{interfaceName},
+            </if>
+            <if test="host != null">
+                host = #{host},
+            </if>
+            <if test="apiUrl != null">
+                api_url = #{apiUrl},
+            </if>
+            <if test="timeOut != null">
+                time_out = #{timeOut},
+            </if>
+            <if test="methods != null">
+                methods = #{methods},
+            </if>
+            <if test="headers != null">
+                headers = #{headers},
+            </if>
+            <if test="headers == null or headers == ''">
+                headers = "",
+            </if>
+            <if test="params != null">
+                params = #{params},
+            </if>
+            <if test="params == null or params == ''">
+                params = "",
+            </if>
+            <if test="body != null">
+                body = #{body},
+            </if>
+            <if test="body == null or body == ''">
+                body = "",
+            </if>
+            <if test="updateTime != null">
+                update_time = now()
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
 </mapper>

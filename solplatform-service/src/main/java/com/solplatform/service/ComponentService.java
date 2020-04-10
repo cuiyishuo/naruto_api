@@ -3,7 +3,6 @@ package com.solplatform.service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.solplatform.entity.HttpEntity;
-import com.solplatform.entity.ProjectEntity;
 import com.solplatform.entity.UserEntity;
 import com.solplatform.exception.BusinessException;
 import com.solplatform.mapper.ComponentMapper;
@@ -68,7 +67,18 @@ public class ComponentService {
         } catch (Exception e) {
             throw new BusinessException ("查询组件异常");
         }
+    }
 
-
+    /**
+     * 更新组件
+     *
+     * @param httpEntity
+     */
+    public void updateCOmponent(HttpEntity httpEntity) {
+        try {
+            componentMapper.updateComponent (httpEntity);
+        } catch (Exception e) {
+            throw new BusinessException ("更新组件异常");
+        }
     }
 }

@@ -21,4 +21,6 @@ public class HttpVo {
     private String params;
     private String body;
     private String componentType;
+    private String createTime;
+    private String updateTime;
 }
