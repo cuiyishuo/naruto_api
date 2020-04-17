@@ -19,5 +19,6 @@ public class CaseEntity extends BaseEntity {
     // 断言表达式列表
     private String assertHeaderList;
     private String assertResbodyList;
-    private String interfaceId;
+    // 接口实体类
+    private HttpEntity httpEntity;
 }

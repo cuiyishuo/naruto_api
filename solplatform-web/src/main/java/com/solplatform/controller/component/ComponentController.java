@@ -83,12 +83,8 @@ public class ComponentController {
             return CommonResult.failed (errMsg);
         } else {
             CaseEntity caseEntity = dozerConvertor.convertor (caseVo, CaseEntity.class);
-            // 提取http对象并存储
-            HttpVo httpVo = caseVo.getHttpVo ();
-            HttpEntity httpEntity = dozerConvertor.convertor (httpVo, HttpEntity.class);
-            componentService.createComponent (httpEntity);
-            // 设置用例中的interfaceId
-            caseEntity.setInterfaceId (httpEntity.getId ());
+            // 创建一条http数据style为case
+            componentService.createComponent (caseEntity.getHttpEntity ());
             // 调用新建用例方法
             caseService.addCase (caseEntity);
             return CommonResult.success (caseVo);

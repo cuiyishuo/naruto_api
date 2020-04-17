@@ -9,9 +9,10 @@
             select REPLACE(UUID(),'-','')
         </selectKey>
         insert into testcase
-        (id,case_name,case_level,assert_type,assert_header_list,assert_resbody_list,interface_id,create_time,update_time)
+        (id,case_name,case_level,assert_type,assert_header_list,assert_resbody_list,create_time,update_time,http_id)
         values
-        (#{id},#{caseName},#{caseLevel},#{assertType},#{assertHeaderList},#{assertResbodyList},#{interfaceId},now(),now())
+        (#{id},#{caseName},#{caseLevel},#{assertType},#{assertHeaderList},#{assertResbodyList},now(),now(),
+        #{httpEntity.id})
     </insert>
 
 </mapper>

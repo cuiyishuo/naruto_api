@@ -1,6 +1,7 @@
 package com.solplatform.vo.component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.solplatform.entity.HttpEntity;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -27,5 +28,5 @@ public class CaseVo {
     private List<Map<String,Object>> assertResbodyList;
     // 接口实体数据(注解映射到前端请求字段）
     @JsonProperty("HttpForm")
-    private HttpVo httpVo;
+    private HttpEntity httpEntity;
 }

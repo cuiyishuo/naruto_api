@@ -8,4 +8,5 @@ com/solplatform/entity/ProjectMemberEntity.class
 com/solplatform/mapper/ProjectMapper.class
 com/solplatform/entity/HttpEntity.class
 com/solplatform/entity/BaseEntity.class
+com/solplatform/handler/FormatHandler.class
 com/solplatform/entity/UserEntity.class
