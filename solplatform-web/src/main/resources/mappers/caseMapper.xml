@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
-<mapper namespace="com.solplatform.mapper.ProjectMemberMapper">
+<mapper namespace="com.solplatform.mapper.CaseMapper">
 
-    <!--selectKey 用来生成uuid-->
-    <insert id="addProjectMember" parameterType="com.solplatform.entity.ProjectMemberEntity">
+    <insert id="addCase" parameterType="com.solplatform.entity.CaseEntity">
         <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
             select REPLACE(UUID(),'-','')
         </selectKey>
-        insert into testcase (id,project_id,user_id,create_time,update_time)
-        values (#{id},#{projectId},#{userId},now(),now())
+        insert into testcase
+        (id,case_name,case_level,assert_type,assert_header_list,assert_resbody_list,interface_id,create_time,update_time)
+        values
+        (#{id},#{caseName},#{caseLevel},#{assertType},#{assertHeaderList},#{assertResbodyList},#{interfaceId},now(),now())
     </insert>
 
 </mapper>

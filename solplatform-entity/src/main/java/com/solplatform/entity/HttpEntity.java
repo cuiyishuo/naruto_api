@@ -1,10 +1,8 @@
 package com.solplatform.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotBlank;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * http请求
@@ -12,8 +10,9 @@ import java.util.Map;
  * @author sol
  * @create 2020-03-12  15:05
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class HttpEntity extends BaseEntity{
+public class HttpEntity extends BaseEntity {
     private String interfaceName;
     @NotBlank(message = "请求方法不能为空")
     private String methods;
@@ -28,4 +27,6 @@ public class HttpEntity extends BaseEntity{
     private String body;
     private String componentType;
     private String projectId;
+    // 模版http或用例http
+    private String style;
 }

@@ -1,5 +1,6 @@
 com/solplatform/util/SessionUtil.class
 com/solplatform/service/UtilService.class
+com/solplatform/vo/component/CaseVo.class
 com/solplatform/common/CommonResult.class
 com/solplatform/service/ComponentService.class
 com/solplatform/exception/BusinessException.class
@@ -15,4 +16,5 @@ com/solplatform/service/ProjectService.class
 com/solplatform/vo/UserVo.class
 com/solplatform/common/CodeMsg.class
 com/solplatform/service/UserService.class
+com/solplatform/service/CaseService.class
 com/solplatform/service/UtilService$3.class

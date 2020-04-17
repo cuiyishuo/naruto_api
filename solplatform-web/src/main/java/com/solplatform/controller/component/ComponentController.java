@@ -1,12 +1,13 @@
 package com.solplatform.controller.component;
 
 import com.solplatform.common.CommonResult;
+import com.solplatform.entity.CaseEntity;
 import com.solplatform.entity.HttpEntity;
-import com.solplatform.entity.UserEntity;
+import com.solplatform.service.CaseService;
 import com.solplatform.service.ComponentService;
 import com.solplatform.util.DozerConvertor;
 import com.solplatform.vo.TablePage;
-import com.solplatform.vo.UserVo;
+import com.solplatform.vo.component.CaseVo;
 import com.solplatform.vo.component.HttpVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,8 @@ public class ComponentController {
     ComponentService componentService;
     @Autowired
     DozerConvertor dozerConvertor;
+    @Autowired
+    CaseService caseService;
 
     @PostMapping("/addComponent")
     public CommonResult<HttpEntity> addComponent(@Valid HttpEntity httpEntity, BindingResult bindingResult, HttpServletResponse response) {
@@ -67,6 +70,28 @@ public class ComponentController {
         } else {
             componentService.updateCOmponent (httpEntity);
             return CommonResult.success (httpEntity);
+        }
+    }
+
+    @PostMapping("/saveCase")
+    public CommonResult<CaseVo> saveCase(@Valid @RequestBody CaseVo caseVo, BindingResult bindingResult, HttpServletResponse response) {
+        //  判断是否字段有错误
+        if (bindingResult.hasErrors ()) {
+            System.err.println ("参数有问题");
+            String errMsg = bindingResult.getFieldError ().getDefaultMessage ();
+            response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
+            return CommonResult.failed (errMsg);
+        } else {
+            CaseEntity caseEntity = dozerConvertor.convertor (caseVo, CaseEntity.class);
+            // 提取http对象并存储
+            HttpVo httpVo = caseVo.getHttpVo ();
+            HttpEntity httpEntity = dozerConvertor.convertor (httpVo, HttpEntity.class);
+            componentService.createComponent (httpEntity);
+            // 设置用例中的interfaceId
+            caseEntity.setInterfaceId (httpEntity.getId ());
+            // 调用新建用例方法
+            caseService.addCase (caseEntity);
+            return CommonResult.success (caseVo);
         }
     }
 }

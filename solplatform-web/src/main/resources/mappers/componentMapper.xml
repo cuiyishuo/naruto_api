@@ -9,12 +9,12 @@
             select REPLACE(UUID(),'-','')
         </selectKey>
         insert into interface
-        (id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params)
+        (id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params,style)
         values
-        (#{id},#{interfaceName},#{methods},#{headers},#{host},#{componentType},now(),now(),#{projectId},#{apiUrl},#{body},#{timeOut},#{params})
+        (#{id},#{interfaceName},#{methods},#{headers},#{host},#{componentType},now(),now(),#{projectId},#{apiUrl},#{body},#{timeOut},#{params},#{style})
     </insert>
 
-    <sql id="componentCol"> id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params </sql>
+    <sql id="componentCol"> id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params,style </sql>
     <select id="findComponentBy" parameterType="com.solplatform.entity.HttpEntity" resultMap="componentMap">
         select
         <include refid="componentCol"/>
@@ -32,7 +32,11 @@
             <if test="id != null">
                 AND id = #{id}
             </if>
+            <if test="style != null">
+                AND style = #{style}
+            </if>
         </where>
+        order by create_time desc
     </select>
     <resultMap id="componentMap" type="com.solplatform.entity.HttpEntity">
         <result property="id" column="id"/>
@@ -48,6 +52,7 @@
         <result property="params" column="params"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="style" column="style"/>
     </resultMap>
 
     <update id="updateComponent" parameterType="com.solplatform.entity.HttpEntity">
