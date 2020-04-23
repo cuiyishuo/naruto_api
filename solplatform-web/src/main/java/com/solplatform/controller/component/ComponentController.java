@@ -73,7 +73,7 @@ public class ComponentController {
         }
     }
 
-    @PostMapping("/saveCase")
+    @PostMapping("/case")
     public CommonResult<CaseVo> saveCase(@Valid @RequestBody CaseVo caseVo, BindingResult bindingResult, HttpServletResponse response) {
         //  判断是否字段有错误
         if (bindingResult.hasErrors ()) {
@@ -83,11 +83,23 @@ public class ComponentController {
             return CommonResult.failed (errMsg);
         } else {
             CaseEntity caseEntity = dozerConvertor.convertor (caseVo, CaseEntity.class);
-            // 创建一条http数据style为case
-            componentService.createComponent (caseEntity.getHttpEntity ());
+            // 新建一个用例中的http对象
+            HttpEntity httpEntity = caseEntity.getHttpEntity ();
+            componentService.createComponent (httpEntity);
             // 调用新建用例方法
             caseService.addCase (caseEntity);
             return CommonResult.success (caseVo);
         }
+    }
+
+    @GetMapping("/cases")
+    public CommonResult<List<CaseVo>> findCase(@RequestParam("interfaceId") String interfaceId1) {
+        // 如果为空则给客户端抛出异常
+        if ("".equals (interfaceId1)) {
+            CommonResult.failed ("缺少所属接口id");
+        }
+        List<CaseEntity> caseEntities = caseService.findCaseByInterfaceId (interfaceId1);
+        List<CaseVo> caseVos = dozerConvertor.convertor (caseEntities, CaseVo.class);
+        return CommonResult.success (caseVos);
     }
 }

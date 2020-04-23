@@ -41,6 +41,8 @@ public class ComponentService {
             httpEntity.setProjectId (projectId);
             componentMapper.addComponent (httpEntity);
         } catch (Exception e) {
+            e.printStackTrace ();
+            System.err.println (e.getMessage ());
             throw new BusinessException ("新增组件异常");
         }
     }

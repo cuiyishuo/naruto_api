@@ -2,6 +2,9 @@ package com.solplatform.entity;
 
 import lombok.Data;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 用例实体
  *
@@ -17,8 +20,10 @@ public class CaseEntity extends BaseEntity {
     // 断言类型
     private String assertType;
     // 断言表达式列表
-    private String assertHeaderList;
-    private String assertResbodyList;
+    private List assertHeaderList;
+    private List assertResbodyList;
     // 接口实体类
     private HttpEntity httpEntity;
+    // 所属接口id
+    private String interfaceId;
 }

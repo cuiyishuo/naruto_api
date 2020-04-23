@@ -1,4 +1,5 @@
 com/solplatform/entity/ProjectEntity.class
+com/solplatform/handler/StringAndListHandler.class
 com/solplatform/mapper/ComponentMapper.class
 com/solplatform/mapper/ProjectMemberMapper.class
 com/solplatform/entity/CaseEntity.class
@@ -8,5 +9,4 @@ com/solplatform/entity/ProjectMemberEntity.class
 com/solplatform/mapper/ProjectMapper.class
 com/solplatform/entity/HttpEntity.class
 com/solplatform/entity/BaseEntity.class
-com/solplatform/handler/FormatHandler.class
 com/solplatform/entity/UserEntity.class

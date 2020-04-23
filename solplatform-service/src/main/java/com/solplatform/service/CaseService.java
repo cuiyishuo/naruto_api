@@ -6,6 +6,8 @@ import com.solplatform.mapper.CaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 用例相关业务
  *
@@ -29,6 +31,22 @@ public class CaseService {
             e.printStackTrace ();
             System.err.println (e.getMessage ());
             throw new BusinessException ("新增测试用例异常");
+        }
+    }
+
+    /**
+     * 通过所属接口id查询测试用例
+     *
+     * @param interfaceId
+     */
+    public List<CaseEntity> findCaseByInterfaceId(String interfaceId) {
+        try {
+            List<CaseEntity> caseList = caseMapper.findCasebyInterfaceId (interfaceId);
+            return caseList;
+        } catch (Exception e) {
+            e.printStackTrace ();
+            System.err.println (e.getMessage ());
+            throw new BusinessException ("查询测试用例异常");
         }
     }
 }

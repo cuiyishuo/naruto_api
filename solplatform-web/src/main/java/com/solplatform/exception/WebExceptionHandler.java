@@ -3,9 +3,12 @@ package com.solplatform.exception;
 import com.solplatform.common.CommonResult;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalTime;
 
@@ -44,6 +47,18 @@ public class WebExceptionHandler {
     }
 
     /**
+     * 缺少请求参数异常
+     *
+     * @return
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    public CommonResult uniqueVerifyException(MissingServletRequestParameterException e) {
+        System.err.println ("缺少请求参数" + e.getMessage () + LocalTime.now ());
+        return CommonResult.failed ("缺少请求参数");
+    }
+
+    /**
      * 自定义的业务异常
      *
      * @return
@@ -54,6 +69,19 @@ public class WebExceptionHandler {
         System.err.println (" 业务异常信息:" + e.getMessage () + LocalTime.now ());
         return CommonResult.failed (e.getMessage ());
     }
+
+    /**
+     * 路径不存在异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public CommonResult handlerNoFoundException(Exception e) {
+        System.err.println (" 业务异常信息:" + e.getMessage () + LocalTime.now ());
+        return CommonResult.failed (e.getMessage ());
+    }
+
 
     /**
      * 处理所有不可知的异常

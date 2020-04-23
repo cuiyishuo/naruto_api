@@ -6,7 +6,6 @@ import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 测试用例vo
@@ -24,9 +23,13 @@ public class CaseVo {
     // 断言类型
     private String assertType;
     // 断言表达式列表
-    private List<Map<String,Object>> assertHeaderList;
-    private List<Map<String,Object>> assertResbodyList;
+    private List assertHeaderList;
+    private List assertResbodyList;
     // 接口实体数据(注解映射到前端请求字段）
     @JsonProperty("HttpForm")
     private HttpEntity httpEntity;
+    // 所属接口id
+    private String interfaceId;
+    private String createTime;
+    private String updateTime;
 }

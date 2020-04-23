@@ -9,10 +9,46 @@
             select REPLACE(UUID(),'-','')
         </selectKey>
         insert into testcase
-        (id,case_name,case_level,assert_type,assert_header_list,assert_resbody_list,create_time,update_time,http_id)
+        (id,case_name,case_level,assert_type,assert_header_list,assert_resbody_list,create_time,update_time,interface_in_case_id,interface_id)
         values
-        (#{id},#{caseName},#{caseLevel},#{assertType},#{assertHeaderList},#{assertResbodyList},now(),now(),
-        #{httpEntity.id})
+        (#{id},#{caseName},#{caseLevel},#{assertType},
+        #{assertHeaderList, jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+        #{assertResbodyList, jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+        now(),now(),#{httpEntity.id},#{interfaceId})
     </insert>
+
+    <select id="findCasebyInterfaceId" parameterType="java.lang.String" resultMap="caseMap">
+        select tc.id,tc.case_name,tc.case_level,tc.assert_type,tc.assert_header_list,tc.assert_resbody_list,tc.create_time,tc.update_time,tc.interface_id,
+         ic.id as inrerfaceId,ic.interface_name,ic.methods,ic.headers,ic.host,ic.api_url,ic.body,ic.params,ic.time_out,ic.component_type,ic.create_time,ic.update_time
+        from testcase tc
+        left join interface ic
+        on tc.interface_in_case_id=ic.id
+        where tc.interface_id=#{0}
+    </select>
+    <resultMap id="caseMap" type="com.solplatform.entity.CaseEntity">
+        <result property="id" column="id"/>
+        <result property="caseName" column="case_name"/>
+        <result property="caseLevel" column="case_level"/>
+        <result property="assertType" column="assert_type"/>
+        <result property="assertHeaderList" column="assert_header_list"
+                typeHandler="com.solplatform.handler.StringAndListHandler"/>
+        <result property="assertResbodyList" column="assert_resbody_list"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="httpEntity" javaType="com.solplatform.entity.HttpEntity">
+            <result property="id" column="id"/>
+            <result property="interfaceName" column="interface_name"/>
+            <result property="methods" column="methods"/>
+            <result property="apiUrl" column="api_url"/>
+            <result property="host" column="host"/>
+            <result property="timeOut" column="time_out"/>
+            <result property="headers" column="headers"/>
+            <result property="body" column="body"/>
+            <result property="params" column="params"/>
+            <result property="componentType" column="component_type"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+        </association>
+    </resultMap>
 
 </mapper>

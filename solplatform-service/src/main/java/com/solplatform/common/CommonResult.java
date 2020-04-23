@@ -59,6 +59,13 @@ public class CommonResult<T> {
     }
 
     /**
+     * 通用失败返回结果
+     */
+    public static <T> CommonResult<T> notFoundFailed() {
+        return new CommonResult<T> (CodeMsg.NOTFOUND_ERROR.getCode (), CodeMsg.NOTFOUND_ERROR.getMsg (), null);
+    }
+
+    /**
      * 参数验证失败返回结果
      */
     public static <T> CommonResult<T> validateFailed() {

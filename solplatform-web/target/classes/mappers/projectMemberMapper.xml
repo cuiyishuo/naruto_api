@@ -9,7 +9,7 @@
         <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
             select REPLACE(UUID(),'-','')
         </selectKey>
-        insert into testcase (id,project_id,user_id,create_time,update_time)
+        insert into project_member (id,project_id,user_id,create_time,update_time)
         values (#{id},#{projectId},#{userId},now(),now())
     </insert>
 
