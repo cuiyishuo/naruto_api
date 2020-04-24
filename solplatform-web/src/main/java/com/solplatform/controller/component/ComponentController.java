@@ -3,19 +3,25 @@ package com.solplatform.controller.component;
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.CaseEntity;
 import com.solplatform.entity.HttpEntity;
+import com.solplatform.service.AssertExpressionService;
 import com.solplatform.service.CaseService;
 import com.solplatform.service.ComponentService;
 import com.solplatform.util.DozerConvertor;
+import com.solplatform.vo.ResponseData;
 import com.solplatform.vo.TablePage;
 import com.solplatform.vo.component.CaseVo;
 import com.solplatform.vo.component.HttpVo;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.Request;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 组件接口
@@ -32,6 +38,8 @@ public class ComponentController {
     DozerConvertor dozerConvertor;
     @Autowired
     CaseService caseService;
+    @Autowired
+    AssertExpressionService assertExpressionService;
 
     @PostMapping("/addComponent")
     public CommonResult<HttpEntity> addComponent(@Valid HttpEntity httpEntity, BindingResult bindingResult, HttpServletResponse response) {
@@ -101,5 +109,30 @@ public class ComponentController {
         List<CaseEntity> caseEntities = caseService.findCaseByInterfaceId (interfaceId1);
         List<CaseVo> caseVos = dozerConvertor.convertor (caseEntities, CaseVo.class);
         return CommonResult.success (caseVos);
+    }
+
+    /**
+     * 判断断言表达式是否通过
+     *
+     * @param expresstion
+     * @return
+     */
+    @PostMapping("/assert")
+    public CommonResult assertExpression(@RequestBody Map<String, Object> expresstion) {
+        // 获取断言表达式类型
+        String assertType = expresstion.get ("assertType").toString ();
+        // 获取断言对象
+        Object assertObj = expresstion.get ("assert");
+        // 获取响应体或响应头
+        Object responseData = expresstion.get ("resdata");
+        String aseertResult = "";
+        switch (assertType) {
+            case "jsonPath":
+                aseertResult = assertExpressionService.checkJsonPath (assertObj, responseData);
+                break;
+            case "context":
+                // 全文匹配
+        }
+        return CommonResult.success (aseertResult);
     }
 }
