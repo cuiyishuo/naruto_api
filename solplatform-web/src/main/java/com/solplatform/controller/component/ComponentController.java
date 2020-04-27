@@ -7,19 +7,15 @@ import com.solplatform.service.AssertExpressionService;
 import com.solplatform.service.CaseService;
 import com.solplatform.service.ComponentService;
 import com.solplatform.util.DozerConvertor;
-import com.solplatform.vo.ResponseData;
 import com.solplatform.vo.TablePage;
 import com.solplatform.vo.component.CaseVo;
 import com.solplatform.vo.component.HttpVo;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -101,13 +97,19 @@ public class ComponentController {
     }
 
     @GetMapping("/cases")
-    public CommonResult<List<CaseVo>> findCase(@RequestParam("interfaceId") String interfaceId1) {
+    public CommonResult<List<CaseVo>> findCase(@RequestParam(defaultValue = "1") int pageNo,
+                                               @RequestParam(defaultValue = "10") int pageSize,
+                                               @RequestParam("interfaceId") String interfaceId1,
+                                               HttpServletResponse response) {
         // 如果为空则给客户端抛出异常
         if ("".equals (interfaceId1)) {
             CommonResult.failed ("缺少所属接口id");
         }
-        List<CaseEntity> caseEntities = caseService.findCaseByInterfaceId (interfaceId1);
-        List<CaseVo> caseVos = dozerConvertor.convertor (caseEntities, CaseVo.class);
+        TablePage tablePage = caseService.findCaseByInterfaceId (pageNo, pageSize, interfaceId1);
+        // 将total返回到响应头中
+        response.setHeader ("total", tablePage.getTotal ().toString ());
+        List caseEntities = tablePage.getCurrentPageData ();
+        List caseVos = dozerConvertor.convertor (caseEntities, CaseVo.class);
         return CommonResult.success (caseVos);
     }
 
@@ -134,5 +136,29 @@ public class ComponentController {
                 // 全文匹配
         }
         return CommonResult.success (aseertResult);
+    }
+
+    /**
+     * 更新测试用例
+     *
+     * @param caseVo
+     * @param bindingResult
+     * @param response
+     * @return
+     */
+    @PatchMapping("/case")
+    public CommonResult updateCase(@Valid @RequestBody CaseVo caseVo, BindingResult bindingResult, HttpServletResponse response) {
+        //  判断是否字段有错误
+        if (bindingResult.hasErrors ()) {
+            System.err.println ("参数有问题");
+            String errMsg = bindingResult.getFieldError ().getDefaultMessage ();
+            response.setStatus (HttpServletResponse.SC_BAD_REQUEST);
+            return CommonResult.failed (errMsg);
+        } else {
+            CaseEntity caseEntity = dozerConvertor.convertor (caseVo, CaseEntity.class);
+            HttpEntity httpEntity = caseEntity.getHttpEntity ();
+            caseService.updateCase (caseEntity, httpEntity);
+            return CommonResult.success (caseVo);
+        }
     }
 }

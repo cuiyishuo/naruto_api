@@ -2,13 +2,7 @@ package com.solplatform.service;
 
 import com.alibaba.fastjson.JSONPath;
 import com.solplatform.exception.BusinessException;
-import com.solplatform.vo.ResponseData;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
 
 /**
  * 断言业务
@@ -33,10 +27,13 @@ public class AssertExpressionService {
             // 通过断言表达式解析响应题内的信息
             result = JSONPath.eval (responseData, expression).toString ();
             System.out.println (result);
+            if ("[]".equalsIgnoreCase (result)) {
+                throw new BusinessException ("表达式格式不正确，请检查表达式");
+            }
         } catch (NullPointerException e) {
             e.printStackTrace ();
             System.err.println (e.getMessage ());
-            throw new BusinessException ("输入的表达式有误，请重新输入");
+            throw new BusinessException ("未找到指定元素，请检查表达式");
         }
         return result;
     }

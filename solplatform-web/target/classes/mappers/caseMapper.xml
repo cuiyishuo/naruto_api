@@ -19,12 +19,40 @@
 
     <select id="findCasebyInterfaceId" parameterType="java.lang.String" resultMap="caseMap">
         select tc.id,tc.case_name,tc.case_level,tc.assert_type,tc.assert_header_list,tc.assert_resbody_list,tc.create_time,tc.update_time,tc.interface_id,
-         ic.id as inrerfaceId,ic.interface_name,ic.methods,ic.headers,ic.host,ic.api_url,ic.body,ic.params,ic.time_out,ic.component_type,ic.create_time,ic.update_time
+         ic.id as interfaceId,ic.interface_name,ic.methods,ic.headers,ic.host,ic.api_url,ic.body,ic.params,ic.time_out,ic.component_type,ic.create_time,ic.update_time
         from testcase tc
         left join interface ic
         on tc.interface_in_case_id=ic.id
         where tc.interface_id=#{0}
     </select>
+
+    <update id="updateCase" parameterType="com.solplatform.entity.CaseEntity">
+        update testcase
+        <set>
+            <if test="caseName != null">
+                case_name = #{caseName},
+            </if>
+            <if test="caseLevel != null">
+                case_level = #{caseLevel},
+            </if>
+            <if test="assertType != null">
+                assert_type = #{assertType},
+            </if>
+            <if test="assertHeaderList != null">
+                assert_header_list =
+                #{assertHeaderList, jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+            </if>
+            <if test="assertResbodyList != null">
+                assert_resbody_list =
+                #{assertResbodyList, jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+            </if>
+            <if test="updateTime != null">
+                update_time = now()
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
     <resultMap id="caseMap" type="com.solplatform.entity.CaseEntity">
         <result property="id" column="id"/>
         <result property="caseName" column="case_name"/>
@@ -36,7 +64,8 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <association property="httpEntity" javaType="com.solplatform.entity.HttpEntity">
-            <result property="id" column="id"/>
+            <!--这里id映射的是起了别名的interface表中的id-->
+            <result property="id" column="interfaceId"/>
             <result property="interfaceName" column="interface_name"/>
             <result property="methods" column="methods"/>
             <result property="apiUrl" column="api_url"/>

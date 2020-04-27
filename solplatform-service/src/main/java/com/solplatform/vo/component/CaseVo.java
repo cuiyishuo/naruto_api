@@ -3,6 +3,7 @@ package com.solplatform.vo.component;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solplatform.entity.HttpEntity;
 import lombok.Data;
+import org.dozer.Mapping;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
@@ -27,9 +28,10 @@ public class CaseVo {
     private List assertResbodyList;
     // 接口实体数据(注解映射到前端请求字段）
     @JsonProperty("HttpForm")
-    private HttpEntity httpEntity;
+    @Mapping("httpEntity")
+    private HttpVo httpVo;
     // 所属接口id
-    private String interfaceId;
+    private String id;
     private String createTime;
     private String updateTime;
 }

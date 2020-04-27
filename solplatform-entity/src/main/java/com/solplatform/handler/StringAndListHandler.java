@@ -45,6 +45,7 @@ public class StringAndListHandler extends BaseTypeHandler<List> {
             System.out.println ("map循环结束：" + maplistStr);
         }
         maplistStr = maplistStr.replace (",#]", "]");
+        maplistStr = maplistStr.replace ("#]", "]");
         return maplistStr;
     }
 
