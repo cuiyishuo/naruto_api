@@ -2,6 +2,7 @@ package com.solplatform.mapper;
 
 import com.solplatform.entity.CaseEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface CaseMapper {
 
     // 更新测试用例
     int updateCase(CaseEntity caseEntity);
+
+    // 根据caseId的list查询用例
+    List<CaseEntity> findCaseByCaseIds(@Param("caseids")List<String> caseIds);
 }

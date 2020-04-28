@@ -22,6 +22,8 @@ public class CaseEntity extends BaseEntity {
     // 断言表达式列表
     private List assertHeaderList;
     private List assertResbodyList;
+    // 用例中的接口数据（与接口模版数据有可能不同）
+    private String interfaceInCaseId;
     // 接口实体类
     private HttpEntity httpEntity;
     // 所属接口id

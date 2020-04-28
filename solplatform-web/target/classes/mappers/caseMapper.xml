@@ -17,7 +17,7 @@
         now(),now(),#{httpEntity.id},#{interfaceId})
     </insert>
 
-    <select id="findCasebyInterfaceId" parameterType="java.lang.String" resultMap="caseMap">
+    <select id="findCasebyInterfaceId" parameterType="java.lang.String" resultMap="caseWithHttp">
         select tc.id,tc.case_name,tc.case_level,tc.assert_type,tc.assert_header_list,tc.assert_resbody_list,tc.create_time,tc.update_time,tc.interface_id,
          ic.id as interfaceId,ic.interface_name,ic.methods,ic.headers,ic.host,ic.api_url,ic.body,ic.params,ic.time_out,ic.component_type,ic.create_time,ic.update_time
         from testcase tc
@@ -25,6 +25,34 @@
         on tc.interface_in_case_id=ic.id
         where tc.interface_id=#{0}
     </select>
+    <resultMap id="caseWithHttp" type="com.solplatform.entity.CaseEntity">
+        <result property="id" column="id"/>
+        <result property="caseName" column="case_name"/>
+        <result property="caseLevel" column="case_level"/>
+        <result property="assertType" column="assert_type"/>
+        <result property="assertHeaderList" column="assert_header_list"
+                typeHandler="com.solplatform.handler.StringAndListHandler"/>
+        <result property="assertResbodyList" column="assert_resbody_list"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="interfaceId" column="interface_id"/>
+        <association property="httpEntity" javaType="com.solplatform.entity.HttpEntity">
+            <!--这里id映射的是起了别名的interface表中的id-->
+            <result property="id" column="interfaceId"/>
+            <result property="interfaceName" column="interface_name"/>
+            <result property="methods" column="methods"/>
+            <result property="apiUrl" column="api_url"/>
+            <result property="host" column="host"/>
+            <result property="timeOut" column="time_out"/>
+            <result property="headers" column="headers"/>
+            <result property="body" column="body"/>
+            <result property="params" column="params"/>
+            <result property="componentType" column="component_type"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+        </association>
+    </resultMap>
+
 
     <update id="updateCase" parameterType="com.solplatform.entity.CaseEntity">
         update testcase
@@ -53,7 +81,15 @@
         where id=#{id}
     </update>
 
-    <resultMap id="caseMap" type="com.solplatform.entity.CaseEntity">
+    <select id="findCaseByCaseIds" resultMap="caseWithHttpId">
+        select * from testcase
+        where id in
+        <foreach item="item" collection="caseids" index="index" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <resultMap id="caseWithHttpId" type="com.solplatform.entity.CaseEntity">
         <result property="id" column="id"/>
         <result property="caseName" column="case_name"/>
         <result property="caseLevel" column="case_level"/>
@@ -63,21 +99,8 @@
         <result property="assertResbodyList" column="assert_resbody_list"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
-        <association property="httpEntity" javaType="com.solplatform.entity.HttpEntity">
-            <!--这里id映射的是起了别名的interface表中的id-->
-            <result property="id" column="interfaceId"/>
-            <result property="interfaceName" column="interface_name"/>
-            <result property="methods" column="methods"/>
-            <result property="apiUrl" column="api_url"/>
-            <result property="host" column="host"/>
-            <result property="timeOut" column="time_out"/>
-            <result property="headers" column="headers"/>
-            <result property="body" column="body"/>
-            <result property="params" column="params"/>
-            <result property="componentType" column="component_type"/>
-            <result property="createTime" column="create_time"/>
-            <result property="updateTime" column="update_time"/>
-        </association>
+        <result property="interfaceId" column="interface_id"/>
+        <result property="interfaceInCaseId" column="interface_in_case_id"/>
     </resultMap>
 
 </mapper>

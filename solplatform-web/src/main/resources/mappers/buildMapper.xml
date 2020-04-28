@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
+<mapper namespace="com.solplatform.mapper.BuildMapper">
+    <insert id="addBuildTest" parameterType="com.solplatform.entity.build.BuildTest">
+
+    </insert>
+
+    <select id="findBuildTestById" parameterType="java.lang.String" resultMap="buildTestMap">
+
+    </select>
+
+    <resultMap id="buildTestMap" type="com.solplatform.entity.build.BuildTest">
+
+    </resultMap>
+
+    <insert id="addBuildCases" parameterType="com.solplatform.entity.build.BuildCaseEntity">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into build_case
+        (id,case_name,case_level,assert_type,assert_header_list,assert_resbody_list,create_time,update_time,interface_id,interface_in_case_id,status,start_at,end_at,duration)
+        values
+        <foreach collection="buildCaseEntitys" item="cases" separator=",">
+            (#{cases.id},#{cases.caseName},#{cases.caseLevel},#{cases.assertType},
+            #{cases.assertHeaderList, jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+            #{cases.assertResbodyList, jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+            now(),now(),#{cases.interfaceId},#{cases.interfaceInCaseId},#{cases.status},#{cases.startAt},#{cases.endAt},#{cases.duration})
+        </foreach>
+    </insert>
+</mapper>

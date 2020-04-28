@@ -1,7 +1,8 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/component/ComponentController.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/interceptor/AuthInterceptor.java
-/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/configure/DozerConfig.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/testutil/HttpTestController.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/controller/testbuild/BuildController.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/configure/DozerConfig.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/exception/WebExceptionHandler.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/util/DozerConvertor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-web/src/main/java/com/solplatform/configure/CorsConfig.java

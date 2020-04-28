@@ -2,6 +2,7 @@ com/solplatform/SpringbootApplication.class
 com/solplatform/interceptor/InterceptorConfig.class
 com/solplatform/util/DozerConvertor.class
 com/solplatform/controller/component/ComponentController.class
+com/solplatform/controller/testbuild/BuildController.class
 com/solplatform/controller/main/LoginController.class
 com/solplatform/controller/main/ProjectController.class
 com/solplatform/controller/testutil/HttpTestController.class

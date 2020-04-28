@@ -3,10 +3,12 @@ com/solplatform/service/UtilService.class
 com/solplatform/vo/component/CaseVo.class
 com/solplatform/common/CommonResult.class
 com/solplatform/service/ComponentService.class
+com/solplatform/service/BuildService.class
 com/solplatform/exception/BusinessException.class
 com/solplatform/service/UtilService$1.class
 com/solplatform/service/UtilService$5.class
 com/solplatform/vo/ResponseData.class
+com/solplatform/util/GenerateId.class
 com/solplatform/vo/ProjectVo.class
 com/solplatform/vo/component/HttpVo.class
 com/solplatform/service/UtilService$2.class
@@ -14,6 +16,7 @@ com/solplatform/service/UtilService$4.class
 com/solplatform/service/AssertExpressionService.class
 com/solplatform/vo/TablePage.class
 com/solplatform/service/ProjectService.class
+com/solplatform/vo/component/BuildArray.class
 com/solplatform/vo/UserVo.class
 com/solplatform/common/CodeMsg.class
 com/solplatform/service/UserService.class
