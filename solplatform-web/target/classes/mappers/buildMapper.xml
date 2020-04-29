@@ -29,4 +29,18 @@
             now(),now(),#{cases.interfaceId},#{cases.interfaceInCaseId},#{cases.status},#{cases.startAt},#{cases.endAt},#{cases.duration})
         </foreach>
     </insert>
+
+    <insert id="addBuildInterfaces" parameterType="com.solplatform.entity.build.BuildInterfaceEntity">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into build_interface
+        (id,interface_name,methods,headers,host,component_type,create_time,update_time,project_id,api_url,body,time_out,params,style,build_test_id,pass_rate,case_size,pass_case_size,failed_case_size)
+        values
+        <foreach collection="buildInterfaceEntitys" item="interfaces" separator=",">
+            (#{interfaces.id},#{interfaces.interfaceName},#{interfaces.methods},#{interfaces.headers},#{interfaces.host},#{interfaces.componentType},now(),now(),
+            #{interfaces.projectId},#{interfaces.apiUrl},#{interfaces.body},#{interfaces.timeOut},#{interfaces.params},#{interfaces.style},
+            #{interfaces.buildTestId},#{interfaces.passRate},#{interfaces.caseSize},#{interfaces.passCaseSize},#{interfaces.failedCaseSize})
+        </foreach>
+    </insert>
 </mapper>

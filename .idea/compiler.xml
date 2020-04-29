@@ -13,9 +13,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="solplatform" target="1.5" />
-      <module name="solplatform-entity" target="1.5" />
-      <module name="solplatform-service" target="1.5" />
+      <module name="solplatform" target="1.8" />
+      <module name="solplatform-entity" target="1.8" />
+      <module name="solplatform-service" target="1.8" />
       <module name="solplatform-web" target="8" />
     </bytecodeTargetLevel>
   </component>

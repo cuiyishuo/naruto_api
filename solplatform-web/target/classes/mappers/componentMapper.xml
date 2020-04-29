@@ -98,4 +98,12 @@
         where id=#{id}
     </update>
 
+    <select id="findComponentByInterfaceIds" resultMap="componentMap">
+        select * from interface
+        where id in
+        <foreach collection="interfaceids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>
