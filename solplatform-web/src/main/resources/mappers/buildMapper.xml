@@ -3,19 +3,26 @@
 
 <!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
 <mapper namespace="com.solplatform.mapper.BuildMapper">
-    <insert id="addBuildTest" parameterType="com.solplatform.entity.build.BuildTest">
-
+    <insert id="addBuildTest" parameterType="com.solplatform.entity.builds.BuildTest">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into build_test
+        (id,status,case_size,pass_case_size,failed_case_size,pass_rate,project_id,mode,duration,start_at,end_at,test_plan_name,test_plan_id,excution_user,create_time)
+        values
+        (#{id},#{status},#{caseSize},#{passCaseSize},#{failedCaseSize},#{passRate},#{projectId},#{mode},#{duration},#{startAt},#{endAt},#{testPlanName},#{testPlanId},
+        #{excutionUser},now())
     </insert>
 
     <select id="findBuildTestById" parameterType="java.lang.String" resultMap="buildTestMap">
 
     </select>
 
-    <resultMap id="buildTestMap" type="com.solplatform.entity.build.BuildTest">
+    <resultMap id="buildTestMap" type="com.solplatform.entity.builds.BuildTest">
 
     </resultMap>
 
-    <insert id="addBuildCases" parameterType="com.solplatform.entity.build.BuildCaseEntity">
+    <insert id="addBuildCases" parameterType="com.solplatform.entity.builds.BuildCaseEntity">
         <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
             select REPLACE(UUID(),'-','')
         </selectKey>
@@ -30,7 +37,7 @@
         </foreach>
     </insert>
 
-    <insert id="addBuildInterfaces" parameterType="com.solplatform.entity.build.BuildInterfaceEntity">
+    <insert id="addBuildInterfaces" parameterType="com.solplatform.entity.builds.BuildInterfaceEntity">
         <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
             select REPLACE(UUID(),'-','')
         </selectKey>

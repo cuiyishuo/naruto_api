@@ -1,8 +1,8 @@
 package com.solplatform.mapper;
 
-import com.solplatform.entity.build.BuildCaseEntity;
-import com.solplatform.entity.build.BuildInterfaceEntity;
-import com.solplatform.entity.build.BuildTest;
+import com.solplatform.entity.builds.BuildCaseEntity;
+import com.solplatform.entity.builds.BuildInterfaceEntity;
+import com.solplatform.entity.builds.BuildTest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

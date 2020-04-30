@@ -1,4 +1,4 @@
-package com.solplatform.entity.build;
+package com.solplatform.entity.builds;
 
 import com.solplatform.entity.CaseEntity;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class BuildCaseEntity extends CaseEntity {
-    // 构建状态
+    // 构建状态(主要区分是否执行完成)
     private String status;
     // 开始时间
     private String startAt;

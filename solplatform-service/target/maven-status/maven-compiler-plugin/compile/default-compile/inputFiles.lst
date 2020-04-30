@@ -4,11 +4,14 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/TablePage.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/component/CaseVo.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/ProjectVo.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/constants/RunMode.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/ComponentService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/component/HttpVo.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/CaseService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/util/GenerateId.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/constants/BuildStatus.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/ResponseData.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/util/DateUtil.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/UtilService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/component/BuildArray.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/ProjectService.java

@@ -1,24 +1,27 @@
 package com.solplatform.service;
 
+import com.solplatform.constants.BuildStatus;
+import com.solplatform.constants.RunMode;
 import com.solplatform.entity.CaseEntity;
 import com.solplatform.entity.HttpEntity;
-import com.solplatform.entity.build.BuildCaseEntity;
-import com.solplatform.entity.build.BuildInterfaceEntity;
+import com.solplatform.entity.builds.BuildCaseEntity;
+import com.solplatform.entity.builds.BuildInterfaceEntity;
+import com.solplatform.entity.builds.BuildTest;
 import com.solplatform.mapper.BuildMapper;
 import com.solplatform.mapper.CaseMapper;
 import com.solplatform.mapper.ComponentMapper;
+import com.solplatform.mapper.UserMapper;
+import com.solplatform.util.DateUtil;
 import com.solplatform.util.GenerateId;
+import com.solplatform.util.SessionUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import static org.apache.coyote.http11.Constants.a;
 
 /**
  * 构建任务业务
@@ -34,6 +37,8 @@ public class BuildService {
     ComponentMapper componentMapper;
     @Autowired
     BuildMapper buildMapper;
+    @Autowired
+    UserMapper userMapper;
 
     /**
      * 通过某一个接口下的用例，创建测试构建任务，并返回构建任务id
@@ -41,7 +46,7 @@ public class BuildService {
      * @param caseIds 某个接口下的用例id集合
      */
     @Transactional
-    public void addBuildTestForCase(List<String> caseIds) {
+    public String addBuildTestForCase(List<String> caseIds) {
         // 1、处理用例
         // 1.1、通过接口id的list查出所有case数据
         List<CaseEntity> caseEntities = caseMapper.findCaseByCaseIds (caseIds);
@@ -49,10 +54,11 @@ public class BuildService {
         List<BuildCaseEntity> buildCaseEntities = this.copyPropertiesForCase (caseEntities);
         // 2、处理接口
         // 2.1、查询出该批用例所属的接口interfaceId，然后查询接口信息
-        String interfaceId = buildCaseEntities.get (0).getInterfaceId ();
-        List<String> inerfaceIds = new ArrayList<String> ();
-        inerfaceIds.add (interfaceId);
-        List<HttpEntity> httpEntities = componentMapper.findComponentByInterfaceIds (inerfaceIds);
+        String interfaceId;
+        interfaceId = buildCaseEntities.get (0).getInterfaceId ();
+        List<String> interfaceIds = new ArrayList<String> ();
+        interfaceIds.add (interfaceId);
+        List<HttpEntity> httpEntities = componentMapper.findComponentByInterfaceIds (interfaceIds);
         // 2.2、将取出的interfaceEntity属性copy到buildInterfaceEntity中
         List<BuildInterfaceEntity> buildInterfaceEntities = this.copyPropertiesForInterface (httpEntities);
         String buildInterfaceId = buildInterfaceEntities.get (0).getId ();
@@ -60,12 +66,21 @@ public class BuildService {
         buildCaseEntities.forEach (buildCase -> buildCase.setInterfaceId (buildInterfaceId));
         // 4、批量插入用例数据
         buildMapper.addBuildCases (buildCaseEntities);
-        // 5、新建构建任务，并取出构建id，赋值给buildInterface中的buildTestId
+        // 5、新建构建任务，并取出构建id
+        BuildTest buildTest = new BuildTest ();
+        buildTest.setTestPlanName ("用例任务-"+ DateUtil.getCurrentDate ());
+        buildTest.setStatus (BuildStatus.WAITFOREXCUTE.name ());
+        buildTest.setMode (RunMode.CASE.name ());
+        buildTest.setCaseSize (buildCaseEntities.size ());
+        buildTest.setProjectId (SessionUtil.getSession("lastProjectId"));
+        String userName = userMapper.findUserById (SessionUtil.getSession ("userId")).getUserName ();
+        buildTest.setExcutionUser (userName);
+        buildMapper.addBuildTest (buildTest);
+        String buildTestId = buildTest.getId ();
+        // 6、在处理接口，赋值给buildInterface中的buildTestId
+        buildInterfaceEntities.forEach (buildInterface -> buildInterface.setBuildTestId (buildTestId));
         buildMapper.addBuildInterfaces (buildInterfaceEntities);
-
-        System.out.println ("OK");
-
-
+        return buildTestId;
     }
 
     /**

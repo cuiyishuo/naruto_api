@@ -1,4 +1,4 @@
-package com.solplatform.entity.build;
+package com.solplatform.entity.builds;
 
 import com.solplatform.entity.BaseEntity;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 public class BuildTest extends BaseEntity {
-    // 构建任务状态
+    // 构建任务状态(主要区分是否执行完成)
     private String status;
     // 执行用例数
     private int caseSize;
@@ -25,7 +25,7 @@ public class BuildTest extends BaseEntity {
     private double passRate;
     // 项目id
     private String projectId;
-    // 任务模式
+    // 任务模式(1按照接口用例运行 2.按照测试计划运行)
     private String mode;
     // 运行时间
     private String duration;
@@ -34,7 +34,9 @@ public class BuildTest extends BaseEntity {
     // 结束时间
     private String endAt;
     // 构建计划名称
-    private String buildTestName;
+    private String testPlanName;
+    // 构建计划id
+    private String testPlanId;
     // 执行人
     private String excutionUser;
     // 构建任务下的接口数据

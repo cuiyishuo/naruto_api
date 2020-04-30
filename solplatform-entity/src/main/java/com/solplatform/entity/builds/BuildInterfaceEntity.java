@@ -1,4 +1,4 @@
-package com.solplatform.entity.build;
+package com.solplatform.entity.builds;
 
 import com.solplatform.entity.HttpEntity;
 import lombok.Data;

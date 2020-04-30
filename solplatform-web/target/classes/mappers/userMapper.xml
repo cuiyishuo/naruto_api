@@ -49,4 +49,10 @@
         </set>
         where id=#{id}
     </update>
+
+    <select id="findUserById" parameterType="java.lang.String" resultMap="userMap">
+        select * from
+        user
+        where id = #{userid}
+    </select>
 </mapper>
