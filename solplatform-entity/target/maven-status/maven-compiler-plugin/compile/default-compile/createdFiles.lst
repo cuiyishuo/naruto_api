@@ -1,7 +1,6 @@
 com/solplatform/entity/ProjectEntity.class
 com/solplatform/mapper/ComponentMapper.class
 com/solplatform/mapper/UserMapper.class
-com/solplatform/entity/builds/BuildTest.class
 com/solplatform/mapper/BuildMapper.class
 com/solplatform/handler/StringAndListHandler.class
 com/solplatform/entity/builds/BuildInterfaceEntity.class
@@ -13,4 +12,5 @@ com/solplatform/entity/builds/BuildCaseEntity.class
 com/solplatform/mapper/ProjectMapper.class
 com/solplatform/entity/HttpEntity.class
 com/solplatform/entity/BaseEntity.class
+com/solplatform/entity/builds/BuildTestEntity.class
 com/solplatform/entity/UserEntity.class

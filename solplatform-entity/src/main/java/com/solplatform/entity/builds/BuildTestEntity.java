@@ -12,7 +12,7 @@ import java.util.List;
  * @create 2020-04-28  12:03
  */
 @Data
-public class BuildTest extends BaseEntity {
+public class BuildTestEntity extends BaseEntity {
     // 构建任务状态(主要区分是否执行完成)
     private String status;
     // 执行用例数

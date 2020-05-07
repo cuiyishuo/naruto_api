@@ -1,4 +1,4 @@
-package com.solplatform.service;
+package com.solplatform.service.builds;
 
 import com.solplatform.constants.BuildStatus;
 import com.solplatform.constants.RunMode;
@@ -6,7 +6,7 @@ import com.solplatform.entity.CaseEntity;
 import com.solplatform.entity.HttpEntity;
 import com.solplatform.entity.builds.BuildCaseEntity;
 import com.solplatform.entity.builds.BuildInterfaceEntity;
-import com.solplatform.entity.builds.BuildTest;
+import com.solplatform.entity.builds.BuildTestEntity;
 import com.solplatform.mapper.BuildMapper;
 import com.solplatform.mapper.CaseMapper;
 import com.solplatform.mapper.ComponentMapper;
@@ -67,16 +67,16 @@ public class BuildService {
         // 4、批量插入用例数据
         buildMapper.addBuildCases (buildCaseEntities);
         // 5、新建构建任务，并取出构建id
-        BuildTest buildTest = new BuildTest ();
-        buildTest.setTestPlanName ("用例任务-"+ DateUtil.getCurrentDate ());
-        buildTest.setStatus (BuildStatus.WAITFOREXCUTE.name ());
-        buildTest.setMode (RunMode.CASE.name ());
-        buildTest.setCaseSize (buildCaseEntities.size ());
-        buildTest.setProjectId (SessionUtil.getSession("lastProjectId"));
+        BuildTestEntity buildTestEntity = new BuildTestEntity ();
+        buildTestEntity.setTestPlanName ("用例任务-"+ DateUtil.getCurrentDate ());
+        buildTestEntity.setStatus (BuildStatus.WAITFOREXCUTE.name ());
+        buildTestEntity.setMode (RunMode.CASE.name ());
+        buildTestEntity.setCaseSize (buildCaseEntities.size ());
+        buildTestEntity.setProjectId (SessionUtil.getSession("lastProjectId"));
         String userName = userMapper.findUserById (SessionUtil.getSession ("userId")).getUserName ();
-        buildTest.setExcutionUser (userName);
-        buildMapper.addBuildTest (buildTest);
-        String buildTestId = buildTest.getId ();
+        buildTestEntity.setExcutionUser (userName);
+        buildMapper.addBuildTest (buildTestEntity);
+        String buildTestId = buildTestEntity.getId ();
         // 6、在处理接口，赋值给buildInterface中的buildTestId
         buildInterfaceEntities.forEach (buildInterface -> buildInterface.setBuildTestId (buildTestId));
         buildMapper.addBuildInterfaces (buildInterfaceEntities);

@@ -3,7 +3,7 @@
 
 <!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
 <mapper namespace="com.solplatform.mapper.BuildMapper">
-    <insert id="addBuildTest" parameterType="com.solplatform.entity.builds.BuildTest">
+    <insert id="addBuildTest" parameterType="com.solplatform.entity.builds.BuildTestEntity">
         <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
             select REPLACE(UUID(),'-','')
         </selectKey>
@@ -15,11 +15,97 @@
     </insert>
 
     <select id="findBuildTestById" parameterType="java.lang.String" resultMap="buildTestMap">
-
+        select * from build_test
+        where id=#{0}
     </select>
 
-    <resultMap id="buildTestMap" type="com.solplatform.entity.builds.BuildTest">
+    <select id="findBuildInterfaceByBuildTestId" parameterType="java.lang.String" resultMap="buildInterfaceMap">
+        select * from build_interface
+        where build_test_id=#{0}
+    </select>
 
+    <select id="findBuildCaseByInterfaceId" parameterType="java.lang.String" resultMap="buildCaseMap">
+        select tc.id,tc.case_name,tc.case_level,tc.assert_type,tc.assert_header_list,tc.assert_resbody_list,tc.create_time,tc.update_time,tc.interface_id,tc.status,tc.start_at,tc.end_at,tc.duration,
+         ic.id as interfaceId,ic.interface_name,ic.methods,ic.headers,ic.host,ic.api_url,ic.body,ic.params,ic.time_out,ic.component_type,ic.create_time,ic.update_time
+        from build_case tc
+        left join interface ic
+        on tc.interface_in_case_id=ic.id
+        where tc.interface_id=#{0}
+    </select>
+
+    <!--  构建任务对象  -->
+    <resultMap id="buildTestMap" type="com.solplatform.entity.builds.BuildTestEntity">
+        <result property="id" column="id"/>
+        <result property="status" column="status"/>
+        <result property="caseSize" column="case_size"/>
+        <result property="passCaseSize" column="pass_case_size"/>
+        <result property="failedCaseSize" column="failed_case_size"/>
+        <result property="passRate" column="pass_rate"/>
+        <result property="projectId" column="project_id"/>
+        <result property="mode" column="mode"/>
+        <result property="duration" column="duration"/>
+        <result property="startAt" column="start_at"/>
+        <result property="endAt" column="end_at"/>
+        <result property="testPlanName" column="test_plan_name"/>
+        <result property="testPlanId" column="test_plan_id"/>
+        <result property="excutionUser" column="excution_user"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="buildInterfaceEntities" column="id"
+                    select="com.solplatform.mapper.BuildMapper.findBuildInterfaceByBuildTestId"/>
+    </resultMap>
+
+    <!--  构建接口对象  -->
+    <resultMap id="buildInterfaceMap" type="com.solplatform.entity.builds.BuildInterfaceEntity">
+        <result property="id" column="id"/>
+        <result property="interfaceName" column="interface_name"/>
+        <result property="methods" column="methods"/>
+        <result property="apiUrl" column="api_url"/>
+        <result property="host" column="host"/>
+        <result property="componentType" column="component_type"/>
+        <result property="projectId" column="project_id"/>
+        <result property="timeOut" column="time_out"/>
+        <result property="headers" column="headers"/>
+        <result property="body" column="body"/>
+        <result property="params" column="params"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="style" column="style"/>
+        <result property="buildTestId" column="build_test_id"/>
+        <collection property="buildCaseEntities" column="id"
+                    select="com.solplatform.mapper.BuildMapper.findBuildCaseByInterfaceId"/>
+    </resultMap>
+
+    <!--  构建用例对象  -->
+    <resultMap id="buildCaseMap" type="com.solplatform.entity.builds.BuildCaseEntity">
+        <result property="id" column="id"/>
+        <result property="caseName" column="case_name"/>
+        <result property="caseLevel" column="case_level"/>
+        <result property="assertType" column="assert_type"/>
+        <result property="assertHeaderList" column="assert_header_list"
+                typeHandler="com.solplatform.handler.StringAndListHandler"/>
+        <result property="assertResbodyList" column="assert_resbody_list"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="interfaceId" column="interface_id"/>
+        <result property="status" column="status"/>
+        <result property="startAt" column="start_at"/>
+        <result property="endAt" column="end_at"/>
+        <result property="duration" column="duration"/>
+        <association property="httpEntity" javaType="com.solplatform.entity.HttpEntity">
+            <!--这里id映射的是起了别名的interface表中的id-->
+            <result property="id" column="interfaceId"/>
+            <result property="interfaceName" column="interface_name"/>
+            <result property="methods" column="methods"/>
+            <result property="apiUrl" column="api_url"/>
+            <result property="host" column="host"/>
+            <result property="timeOut" column="time_out"/>
+            <result property="headers" column="headers"/>
+            <result property="body" column="body"/>
+            <result property="params" column="params"/>
+            <result property="componentType" column="component_type"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
+        </association>
     </resultMap>
 
     <insert id="addBuildCases" parameterType="com.solplatform.entity.builds.BuildCaseEntity">

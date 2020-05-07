@@ -11,3 +11,4 @@ com/solplatform/configure/CorsConfig.class
 com/solplatform/controller/main/RegisterController.class
 com/solplatform/configure/DozerConfig.class
 com/solplatform/interceptor/AuthInterceptor.class
+com/solplatform/controller/testbuild/RunTestController.class

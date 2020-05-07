@@ -2,13 +2,14 @@ com/solplatform/util/SessionUtil.class
 com/solplatform/constants/BuildStatus.class
 com/solplatform/vo/component/CaseVo.class
 com/solplatform/common/CommonResult.class
-com/solplatform/service/BuildService.class
 com/solplatform/service/UtilService$1.class
 com/solplatform/util/DateUtil.class
 com/solplatform/util/GenerateId.class
+com/solplatform/service/builds/RunTestService.class
 com/solplatform/service/UtilService$2.class
 com/solplatform/service/UtilService$4.class
 com/solplatform/vo/TablePage.class
+com/solplatform/service/builds/BuildService.class
 com/solplatform/vo/component/BuildArray.class
 com/solplatform/common/CodeMsg.class
 com/solplatform/service/UtilService.class
