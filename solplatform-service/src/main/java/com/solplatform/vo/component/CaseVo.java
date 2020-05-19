@@ -34,4 +34,5 @@ public class CaseVo {
     private String id;
     private String createTime;
     private String updateTime;
+    private String interfaceId;
 }

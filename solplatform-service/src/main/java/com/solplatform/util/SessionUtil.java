@@ -15,14 +15,14 @@ public class SessionUtil {
     /**
      * 获取session
      *
-     * @param sessionKkey
+     * @param sessionKey
      * @return
      */
-    public static String getSession(String sessionKkey) {
+    public static String getSession(String sessionKey) {
         // 获取userId
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes ();
         HttpServletRequest request = requestAttributes.getRequest ();
-        String sessionValue = (String) request.getSession ().getAttribute (sessionKkey);
+        String sessionValue = (String) request.getSession ().getAttribute (sessionKey);
         return sessionValue;
     }
 }

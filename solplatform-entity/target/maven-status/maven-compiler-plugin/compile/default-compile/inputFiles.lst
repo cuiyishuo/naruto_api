@@ -11,6 +11,7 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/entity/HttpEntity.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/mapper/BuildMapper.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/mapper/CaseMapper.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/handler/StringAndMapHandler.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/entity/builds/BuildTestEntity.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/mapper/ProjectMapper.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-entity/src/main/java/com/solplatform/entity/UserEntity.java

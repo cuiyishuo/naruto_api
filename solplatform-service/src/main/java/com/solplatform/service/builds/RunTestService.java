@@ -1,9 +1,22 @@
 package com.solplatform.service.builds;
 
+import com.solplatform.constants.RunMode;
+import com.solplatform.entity.HttpEntity;
+import com.solplatform.entity.builds.BuildCaseEntity;
+import com.solplatform.entity.builds.BuildInterfaceEntity;
 import com.solplatform.entity.builds.BuildTestEntity;
+import com.solplatform.exception.BusinessException;
+import com.solplatform.factorys.component.ComponentFactory;
+import com.solplatform.factorys.component.ComponentProcessor;
 import com.solplatform.mapper.BuildMapper;
+import com.solplatform.service.AssertExpressionService;
+import com.solplatform.vo.BuildContent;
+import com.solplatform.vo.ResponseData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 /**
  * 执行测试用例业务
@@ -12,19 +25,73 @@ import org.springframework.stereotype.Service;
  * @create 2020-05-06  4:51 下午
  */
 @Service
+@Slf4j
 public class RunTestService {
     @Autowired
     BuildMapper buildMapper;
+    @Autowired
+    ComponentFactory componentFactory;
+    @Autowired
+    AssertExpressionService assertExpressionService;
 
     /**
-     * 执行构建任务
+     * * 执行构建任务
      *
-     * @param buildTestId 构建任务的id
+     * @param buildContent
+     * @return
      */
-    public BuildTestEntity runTest(String buildTestId) {
-        // 1、根据构建id查询出接口和用例等信息
+    public BuildTestEntity runTest(BuildContent buildContent) {
+        String buildTestId = buildContent.getBuildTestEntity ().getId ();
+        // 1、根据构建id查询出接口list和用例list的信息
         BuildTestEntity buildTestEntity = buildMapper.findBuildTestById (buildTestId);
+        // 2、存入构建上下文
+        buildContent.setBuildTestEntity (buildTestEntity);
+        String runMode = buildTestEntity.getMode ();
+        if (RunMode.MODEL.name ().equals (runMode)) {
+            // 执行模块模式的构建
+            this.runTestByModel (buildContent);
+        } else if (RunMode.TESTPLAN.name ().equals (runMode)) {
+            // 执行测试计划模式的构建
+        }
         System.out.println (buildTestEntity);
         return buildTestEntity;
+    }
+
+    /**
+     * 模块级别测试
+     *
+     * @param buildContent 构建上下文
+     */
+    public void runTestByModel(BuildContent buildContent) {
+        try {
+            List<BuildInterfaceEntity> buildInterfaceEntities = buildContent.getBuildTestEntity ().getBuildInterfaceEntities ();
+            Iterator<BuildInterfaceEntity> buildInterfaceEntityIterator = buildInterfaceEntities.iterator ();
+            while (buildInterfaceEntityIterator.hasNext ()) {
+                log.info ("遍历接口list");
+                BuildInterfaceEntity buildInterfaceEntity = buildInterfaceEntityIterator.next ();
+                buildContent.setBuildInterfaceEntity (buildInterfaceEntity);
+                String componentType = buildInterfaceEntity.getComponentType ();
+                List<BuildCaseEntity> buildCaseEntities = buildInterfaceEntity.getBuildCaseEntities ();
+                // 通过向下转型获得实现类的对象
+                ComponentProcessor componentProcessor = componentFactory.getComponent (componentType);
+                Iterator<BuildCaseEntity> buildCaseEntityIterator = buildCaseEntities.iterator ();
+                while (buildCaseEntityIterator.hasNext ()) {
+                    BuildCaseEntity buildCaseEntity = buildCaseEntityIterator.next ();
+                    buildContent.setBuildCaseEntity (buildCaseEntity);
+                    log.info ("遍历用例list");
+                    // 获取用例接口实体，传入执行测试方法
+                    HttpEntity httpEntity = buildCaseEntity.getHttpEntity ();
+                    log.info ("开始通过工厂处理器执行 [runTest()],执行类型为 [{}]", componentType);
+                    ResponseData responseData = componentProcessor.runTest (buildContent);
+                    String assertType = buildCaseEntity.getAssertType ();
+                    log.info ("开始通过工厂处理器执行 [assertTest()],断言类型为 [{}]", componentType);
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace ();
+            System.out.println (e.getMessage ());
+            throw new BusinessException ("执行测试用例异常");
+        }
     }
 }

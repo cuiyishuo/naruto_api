@@ -25,6 +25,7 @@ public class HttpEntity extends BaseEntity {
     private String timeOut;
     private String params;
     private String body;
+    // http\dubbo\等
     private String componentType;
     private String projectId;
     // 模版http或用例http

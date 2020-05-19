@@ -136,4 +136,19 @@
             #{interfaces.buildTestId},#{interfaces.passRate},#{interfaces.caseSize},#{interfaces.passCaseSize},#{interfaces.failedCaseSize})
         </foreach>
     </insert>
+
+    <update id="updateBuildCaseResult" parameterType="java.lang.String">
+        update build_case
+        <set>
+            <if test="responseBody != null">
+                response_body =
+                #{responseBody,jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndListHandler},
+            </if>
+            <if test="responseHeader != null">
+                response_header =
+                #{responseHeader,jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndMapHandler}
+            </if>
+        </set>
+        where id=#{0}
+    </update>
 </mapper>

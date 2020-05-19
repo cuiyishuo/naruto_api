@@ -70,7 +70,7 @@ public class BuildService {
         BuildTestEntity buildTestEntity = new BuildTestEntity ();
         buildTestEntity.setTestPlanName ("用例任务-"+ DateUtil.getCurrentDate ());
         buildTestEntity.setStatus (BuildStatus.WAITFOREXCUTE.name ());
-        buildTestEntity.setMode (RunMode.CASE.name ());
+        buildTestEntity.setMode (RunMode.MODEL.name ());
         buildTestEntity.setCaseSize (buildCaseEntities.size ());
         buildTestEntity.setProjectId (SessionUtil.getSession("lastProjectId"));
         String userName = userMapper.findUserById (SessionUtil.getSession ("userId")).getUserName ();

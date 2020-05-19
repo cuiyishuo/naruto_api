@@ -2,6 +2,9 @@
   <profile version="1.0">
     <option name="myName" value="Project Default copy" />
     <inspection_tool class="Duplicates" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="SortedCollectionWithNonComparableKeys" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="IGNORE_TYPE_PARAMETERS" value="true" />
+    </inspection_tool>
     <inspection_tool class="SpringJavaInjectionPointsAutowiringInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SqlDialectInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />

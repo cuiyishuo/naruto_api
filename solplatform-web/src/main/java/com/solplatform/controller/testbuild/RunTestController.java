@@ -3,6 +3,7 @@ package com.solplatform.controller.testbuild;
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.builds.BuildTestEntity;
 import com.solplatform.service.builds.RunTestService;
+import com.solplatform.vo.BuildContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,11 @@ public class RunTestController {
      */
     @GetMapping("/build/{buildTestId}")
     public CommonResult runTestByCase(@PathVariable String buildTestId) {
-        BuildTestEntity buildTestEntity = runTestService.runTest (buildTestId);
+        BuildContent buildContent = new BuildContent ();
+        BuildTestEntity buildTestEntity = new BuildTestEntity ();
+        buildTestEntity.setId (buildTestId);
+        buildContent.setBuildTestEntity (buildTestEntity);
+        buildTestEntity = runTestService.runTest (buildContent);
         return CommonResult.success (buildTestEntity);
     }
 }

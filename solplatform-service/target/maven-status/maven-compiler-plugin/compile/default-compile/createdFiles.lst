@@ -2,7 +2,9 @@ com/solplatform/util/SessionUtil.class
 com/solplatform/constants/BuildStatus.class
 com/solplatform/vo/component/CaseVo.class
 com/solplatform/common/CommonResult.class
+com/solplatform/factorys/component/ComponentFactory.class
 com/solplatform/service/UtilService$1.class
+com/solplatform/vo/BuildContent.class
 com/solplatform/util/DateUtil.class
 com/solplatform/util/GenerateId.class
 com/solplatform/service/builds/RunTestService.class
@@ -16,12 +18,15 @@ com/solplatform/service/UtilService.class
 com/solplatform/constants/RunMode.class
 com/solplatform/service/ComponentService.class
 com/solplatform/exception/BusinessException.class
+com/solplatform/factorys/component/impl/HttpProcessor.class
 com/solplatform/service/UtilService$5.class
 com/solplatform/vo/ResponseData.class
 com/solplatform/vo/ProjectVo.class
+com/solplatform/factorys/component/ComponentProcessor.class
 com/solplatform/vo/component/HttpVo.class
 com/solplatform/service/AssertExpressionService.class
 com/solplatform/service/ProjectService.class
+com/solplatform/factorys/component/impl/DubboProcessor.class
 com/solplatform/vo/UserVo.class
 com/solplatform/service/UserService.class
 com/solplatform/service/CaseService.class

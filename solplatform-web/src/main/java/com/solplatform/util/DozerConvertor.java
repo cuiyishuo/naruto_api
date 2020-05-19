@@ -32,7 +32,7 @@ public class DozerConvertor {
      */
     public <T, S> List<T> convertor(List<S> source, Class<T> clz) {
         if (source == null) return null;
-        List<T> map = new ArrayList<T> ();
+        List<T> map = new ArrayList<> ();
         for (S s : source) {
             map.add (mapper.map (s, clz));
         }
@@ -50,7 +50,7 @@ public class DozerConvertor {
      */
     public <T, S> Set<T> convertor(Set<S> source, Class<T> clz) {
         if (source == null) return null;
-        Set<T> set = new TreeSet<T> ();
+        Set<T> set = new TreeSet<> ();
         for (S s : source) {
             set.add (mapper.map (s, clz));
         }

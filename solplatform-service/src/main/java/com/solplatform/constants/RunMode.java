@@ -1,7 +1,7 @@
 package com.solplatform.constants;
 
 public enum RunMode {
-    CASE ("case"),INTERFACE("interface"),TESTPLAN("test_plan");
+    MODEL("model"),TESTPLAN("test_plan");
 
     // 定义一个 private 修饰的实例变量
     private String date;
