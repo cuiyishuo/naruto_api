@@ -6,10 +6,13 @@ import com.solplatform.entity.builds.BuildCaseEntity;
 import com.solplatform.entity.builds.BuildInterfaceEntity;
 import com.solplatform.entity.builds.BuildTestEntity;
 import com.solplatform.exception.BusinessException;
+import com.solplatform.factorys.asserts.AssertFactory;
+import com.solplatform.factorys.asserts.AssertProcessor;
 import com.solplatform.factorys.component.ComponentFactory;
 import com.solplatform.factorys.component.ComponentProcessor;
 import com.solplatform.mapper.BuildMapper;
 import com.solplatform.service.AssertExpressionService;
+import com.solplatform.util.LogInfoUtil;
 import com.solplatform.vo.BuildContent;
 import com.solplatform.vo.ResponseData;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,8 @@ public class RunTestService {
     ComponentFactory componentFactory;
     @Autowired
     AssertExpressionService assertExpressionService;
+    @Autowired
+    AssertFactory assertFactory;
 
     /**
      * * 执行构建任务
@@ -41,6 +46,7 @@ public class RunTestService {
      * @return
      */
     public BuildTestEntity runTest(BuildContent buildContent) {
+        log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
         String buildTestId = buildContent.getBuildTestEntity ().getId ();
         // 1、根据构建id查询出接口list和用例list的信息
         BuildTestEntity buildTestEntity = buildMapper.findBuildTestById (buildTestId);
@@ -53,7 +59,6 @@ public class RunTestService {
         } else if (RunMode.TESTPLAN.name ().equals (runMode)) {
             // 执行测试计划模式的构建
         }
-        System.out.println (buildTestEntity);
         return buildTestEntity;
     }
 
@@ -63,6 +68,7 @@ public class RunTestService {
      * @param buildContent 构建上下文
      */
     public void runTestByModel(BuildContent buildContent) {
+        log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
         try {
             List<BuildInterfaceEntity> buildInterfaceEntities = buildContent.getBuildTestEntity ().getBuildInterfaceEntities ();
             Iterator<BuildInterfaceEntity> buildInterfaceEntityIterator = buildInterfaceEntities.iterator ();
@@ -77,15 +83,14 @@ public class RunTestService {
                 Iterator<BuildCaseEntity> buildCaseEntityIterator = buildCaseEntities.iterator ();
                 while (buildCaseEntityIterator.hasNext ()) {
                     BuildCaseEntity buildCaseEntity = buildCaseEntityIterator.next ();
+                    log.info ("遍历用例list,并存储到上下文中");
                     buildContent.setBuildCaseEntity (buildCaseEntity);
-                    log.info ("遍历用例list");
-                    // 获取用例接口实体，传入执行测试方法
-                    HttpEntity httpEntity = buildCaseEntity.getHttpEntity ();
                     log.info ("开始通过工厂处理器执行 [runTest()],执行类型为 [{}]", componentType);
                     ResponseData responseData = componentProcessor.runTest (buildContent);
                     String assertType = buildCaseEntity.getAssertType ();
-                    log.info ("开始通过工厂处理器执行 [assertTest()],断言类型为 [{}]", componentType);
-
+                    log.info ("开始通过工厂处理器执行 [assertTest()],断言类型为 [{}]", assertType);
+                    AssertProcessor assertProcessor = assertFactory.getAssert (assertType);
+                    assertProcessor.assertTest (buildContent);
                 }
             }
         } catch (Exception e) {

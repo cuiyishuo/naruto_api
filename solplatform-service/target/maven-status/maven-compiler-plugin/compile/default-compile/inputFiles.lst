@@ -3,6 +3,7 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/common/CodeMsg.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/TablePage.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/component/impl/HttpProcessor.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/impl/FullTextProcessor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/ComponentService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/component/HttpVo.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/CaseService.java
@@ -10,10 +11,14 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/util/GenerateId.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/ResponseData.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/builds/RunTestService.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/util/LogInfoUtil.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/UtilService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/common/CommonResult.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/UserVo.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/impl/JsonPathProcessor.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/AssertProcessor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/UserService.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/AssertFactory.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/exception/BusinessException.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/component/CaseVo.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/ProjectVo.java

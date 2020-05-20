@@ -3,6 +3,7 @@ package com.solplatform.factorys.component.impl;
 import com.solplatform.entity.HttpEntity;
 import com.solplatform.factorys.component.ComponentProcessor;
 import com.solplatform.service.UtilService;
+import com.solplatform.util.LogInfoUtil;
 import com.solplatform.vo.BuildContent;
 import com.solplatform.vo.ResponseData;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class HttpProcessor implements ComponentProcessor {
     @Override
     public ResponseData runTest(BuildContent buildContent) {
         try {
-            log.info ("执行http组件测试：【{}】", this.getClass ().getName ());
+            log.info ("进入方法【{}】，执行http接口测试", LogInfoUtil.getCurrentMethod ());
             ResponseData responseData = new ResponseData ();
             HttpEntity httpEntity = buildContent.getBuildCaseEntity ().getHttpEntity ();
             String method = httpEntity.getMethods ();
