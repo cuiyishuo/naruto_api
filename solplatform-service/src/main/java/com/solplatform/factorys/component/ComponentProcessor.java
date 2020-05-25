@@ -13,5 +13,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ComponentProcessor {
     // 运行构建返回测试结果
-    public ResponseData runTest(BuildContent buildContent);
+    public void runTest(BuildContent buildContent);
 }

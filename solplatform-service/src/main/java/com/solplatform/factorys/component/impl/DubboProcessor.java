@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DubboProcessor implements ComponentProcessor {
     @Override
-    public ResponseData runTest(BuildContent buildContent) {
+    public void runTest(BuildContent buildContent) {
         System.out.println ("dubbo 模式");
-        return null;
     }
 }

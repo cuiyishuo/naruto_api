@@ -137,7 +137,7 @@
         </foreach>
     </insert>
 
-    <update id="updateBuildCaseResult" parameterType="java.lang.String">
+    <update id="updateBuildCaseById" parameterType="java.lang.String">
         update build_case
         <set>
             <if test="responseBody != null">
@@ -147,6 +147,18 @@
             <if test="responseHeader != null">
                 response_header =
                 #{responseHeader,jdbcType=VARCHAR, typeHandler=com.solplatform.handler.StringAndMapHandler}
+            </if>
+            <if test="startAt != null">
+                start_at = startAt
+            </if>
+            <if test="endAt != null">
+                end_at = endAt
+            </if>
+            <if test="duration != null">
+                duration = duration
+            </if>
+            <if test="status != null">
+                status = status
             </if>
         </set>
         where id=#{0}

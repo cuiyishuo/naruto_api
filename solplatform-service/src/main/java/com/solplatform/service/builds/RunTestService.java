@@ -73,7 +73,7 @@ public class RunTestService {
             List<BuildInterfaceEntity> buildInterfaceEntities = buildContent.getBuildTestEntity ().getBuildInterfaceEntities ();
             Iterator<BuildInterfaceEntity> buildInterfaceEntityIterator = buildInterfaceEntities.iterator ();
             while (buildInterfaceEntityIterator.hasNext ()) {
-                log.info ("遍历接口list");
+                log.info ("遍历接口list,并存储到上下文中");
                 BuildInterfaceEntity buildInterfaceEntity = buildInterfaceEntityIterator.next ();
                 buildContent.setBuildInterfaceEntity (buildInterfaceEntity);
                 String componentType = buildInterfaceEntity.getComponentType ();
@@ -86,11 +86,18 @@ public class RunTestService {
                     log.info ("遍历用例list,并存储到上下文中");
                     buildContent.setBuildCaseEntity (buildCaseEntity);
                     log.info ("开始通过工厂处理器执行 [runTest()],执行类型为 [{}]", componentType);
-                    ResponseData responseData = componentProcessor.runTest (buildContent);
+                    componentProcessor.runTest (buildContent);
                     String assertType = buildCaseEntity.getAssertType ();
                     log.info ("开始通过工厂处理器执行 [assertTest()],断言类型为 [{}]", assertType);
                     AssertProcessor assertProcessor = assertFactory.getAssert (assertType);
                     assertProcessor.assertTest (buildContent);
+                    log.info ("将用例更新到数据库");
+                    try {
+                        buildMapper.updateBuildCaseById (buildContent.getBuildCaseEntity ().getId ());
+                    } catch (Exception e) {
+                        log.error ("更新构建用例失败：" + e.getMessage ());
+                    }
+
                 }
             }
         } catch (Exception e) {
