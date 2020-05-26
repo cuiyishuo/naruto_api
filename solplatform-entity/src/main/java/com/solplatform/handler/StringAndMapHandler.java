@@ -21,7 +21,7 @@ import java.util.Set;
  * @create 2020-05-08  11:31 下午
  */
 @MappedTypes(Map.class)
-@MappedJdbcTypes(value = JdbcType.VARCHAR)
+@MappedJdbcTypes(value = JdbcType.BLOB)
 public class StringAndMapHandler extends BaseTypeHandler<Map> {
 
     // --- private methods ---
@@ -51,21 +51,25 @@ public class StringAndMapHandler extends BaseTypeHandler<Map> {
 
     @Override
     public void setNonNullParameter(PreparedStatement preparedStatement, int i, Map map, JdbcType jdbcType) throws SQLException {
-
+        String str = mapToString (map);
+        preparedStatement.setString (i, str);
     }
 
     @Override
-    public Map getNullableResult(ResultSet resultSet, String s) throws SQLException {
-        return null;
+    public Map getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
+        String str = resultSet.getString (columnName);
+        return StringToMap (str);
     }
 
     @Override
-    public Map getNullableResult(ResultSet resultSet, int i) throws SQLException {
-        return null;
+    public Map getNullableResult(ResultSet resultSet, int columnIndex) throws SQLException {
+        String str = resultSet.getString (columnIndex);
+        return StringToMap (str);
     }
 
     @Override
-    public Map getNullableResult(CallableStatement callableStatement, int i) throws SQLException {
-        return null;
+    public Map getNullableResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
+        String str = callableStatement.getString (columnIndex);
+        return StringToMap (str);
     }
 }

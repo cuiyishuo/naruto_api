@@ -93,7 +93,7 @@ public class RunTestService {
                     assertProcessor.assertTest (buildContent);
                     log.info ("将用例更新到数据库");
                     try {
-                        buildMapper.updateBuildCaseById (buildContent.getBuildCaseEntity ().getId ());
+                        buildMapper.updateBuildCaseById (buildContent.getBuildCaseEntity ());
                     } catch (Exception e) {
                         log.error ("更新构建用例失败：" + e.getMessage ());
                     }

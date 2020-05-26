@@ -29,5 +29,5 @@ public interface BuildMapper {
     List<BuildCaseEntity> findBuildCaseByInterfaceId(String InterfaceId);
 
     // 根据id，更新构建的测试用例
-    void updateBuildCaseById(String buildCaseId);
+    void updateBuildCaseById(BuildCaseEntity buildCaseEntity);
 }
