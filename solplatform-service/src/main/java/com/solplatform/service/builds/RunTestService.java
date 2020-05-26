@@ -1,7 +1,7 @@
 package com.solplatform.service.builds;
 
+import com.solplatform.constants.BuildStatus;
 import com.solplatform.constants.RunMode;
-import com.solplatform.entity.HttpEntity;
 import com.solplatform.entity.builds.BuildCaseEntity;
 import com.solplatform.entity.builds.BuildInterfaceEntity;
 import com.solplatform.entity.builds.BuildTestEntity;
@@ -12,6 +12,7 @@ import com.solplatform.factorys.component.ComponentFactory;
 import com.solplatform.factorys.component.ComponentProcessor;
 import com.solplatform.mapper.BuildMapper;
 import com.solplatform.service.AssertExpressionService;
+import com.solplatform.util.Calculat;
 import com.solplatform.util.LogInfoUtil;
 import com.solplatform.vo.BuildContent;
 import com.solplatform.vo.ResponseData;
@@ -81,6 +82,9 @@ public class RunTestService {
                 // 通过向下转型获得实现类的对象
                 ComponentProcessor componentProcessor = componentFactory.getComponent (componentType);
                 Iterator<BuildCaseEntity> buildCaseEntityIterator = buildCaseEntities.iterator ();
+
+                int passCaseSize = 0;
+                int caseSize = buildCaseEntities.size ();
                 while (buildCaseEntityIterator.hasNext ()) {
                     BuildCaseEntity buildCaseEntity = buildCaseEntityIterator.next ();
                     log.info ("遍历用例list,并存储到上下文中");
@@ -93,12 +97,22 @@ public class RunTestService {
                     assertProcessor.assertTest (buildContent);
                     log.info ("将用例更新到数据库");
                     try {
-                        buildMapper.updateBuildCaseById (buildContent.getBuildCaseEntity ());
+                        buildMapper.updateBuildCase (buildContent.getBuildCaseEntity ());
                     } catch (Exception e) {
-                        log.error ("更新构建用例失败：" + e.getMessage ());
+                        log.error ("数据库更新构建用例失败：" + e.getMessage ());
                     }
-
+                    if (BuildStatus.PASS.name ().equalsIgnoreCase (buildContent.getBuildCaseEntity ().getStatus ())) {
+                        passCaseSize++;
+                    }
                 }
+                log.info ("统计用例通过率");
+                buildContent.getBuildInterfaceEntity ().setCaseSize (caseSize);
+                buildContent.getBuildInterfaceEntity ().setPassCaseSize (passCaseSize);
+                buildContent.getBuildInterfaceEntity ().setFailedCaseSize (caseSize - passCaseSize);
+                double percentage = Calculat.percentage ((double) passCaseSize, (double) caseSize, 2);
+                buildContent.getBuildInterfaceEntity ().setPassRate (percentage);
+                log.info ("将接口数据存储到数据库");
+                buildMapper.updateBuildInterface (buildContent.getBuildInterfaceEntity ());
             }
         } catch (Exception e) {
             e.printStackTrace ();

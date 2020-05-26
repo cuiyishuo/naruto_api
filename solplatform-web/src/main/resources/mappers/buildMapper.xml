@@ -137,7 +137,7 @@
         </foreach>
     </insert>
 
-    <update id="updateBuildCaseById" parameterType="com.solplatform.entity.builds.BuildCaseEntity">
+    <update id="updateBuildCase" parameterType="com.solplatform.entity.builds.BuildCaseEntity">
         update build_case
         <set>
             <if test="responseBody != null">
@@ -159,6 +159,25 @@
             </if>
             <if test="status != null">
                 status = #{status},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <update id="updateBuildInterface" parameterType="com.solplatform.entity.builds.BuildInterfaceEntity">
+        update build_interface
+        <set>
+            <if test="passRate != null">
+                pass_rate = #{passRate},
+            </if>
+            <if test="caseSize != null">
+                case_size = #{caseSize},
+            </if>
+            <if test="passCaseSize != null">
+                pass_case_size = #{passCaseSize},
+            </if>
+            <if test="failedCaseSize != null">
+                failed_case_size = #{failedCaseSize},
             </if>
         </set>
         where id=#{id}

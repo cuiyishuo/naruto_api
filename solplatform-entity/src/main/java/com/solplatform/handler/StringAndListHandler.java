@@ -56,7 +56,7 @@ public class StringAndListHandler extends BaseTypeHandler<List> {
         List mapList = new ArrayList ();
         JSONArray jsonObject = JSONObject.parseArray (maplistStr);
         JSONObject jsonObject1;
-        System.out.println (jsonObject);
+//        System.out.println (jsonObject);
         for (int i = 0; i < jsonObject.size (); i++) {
             jsonObject1 = (JSONObject) jsonObject.get (i);
             Iterator iter = jsonObject1.entrySet ().iterator ();

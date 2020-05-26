@@ -24,6 +24,7 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/ProjectVo.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/constants/RunMode.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/component/ComponentProcessor.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/util/Calculat.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/constants/BuildStatus.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/component/ComponentFactory.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/util/DateUtil.java

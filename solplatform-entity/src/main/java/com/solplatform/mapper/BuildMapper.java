@@ -28,6 +28,9 @@ public interface BuildMapper {
     // 根据接口id查询构建用例
     List<BuildCaseEntity> findBuildCaseByInterfaceId(String InterfaceId);
 
-    // 根据id，更新构建的测试用例
-    void updateBuildCaseById(BuildCaseEntity buildCaseEntity);
+    // 更新构建的测试用例
+    void updateBuildCase(BuildCaseEntity buildCaseEntity);
+
+    // 更新构建的接口
+    void updateBuildInterface(BuildInterfaceEntity buildInterfaceEntity);
 }
