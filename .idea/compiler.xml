@@ -7,16 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="solplatform-web" />
         <module name="solplatform-entity" />
         <module name="solplatform-service" />
-        <module name="solplatform-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="solplatform" target="1.8" />
       <module name="solplatform-entity" target="1.8" />
       <module name="solplatform-service" target="1.8" />
-      <module name="solplatform-web" target="8" />
+      <module name="solplatform-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
