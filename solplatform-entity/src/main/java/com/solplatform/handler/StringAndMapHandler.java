@@ -45,7 +45,7 @@ public class StringAndMapHandler extends BaseTypeHandler<Map> {
      * map数组转String
      */
     public static Map<String, String> StringToMap(String mapStr) {
-        Map<String, String> map = new HashMap<> ();
+        HashMap map = new HashMap ();
         return map;
     }
 
