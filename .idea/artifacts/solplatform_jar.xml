@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="solplatform:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/solplatform_jar</output-path>
+    <root id="archive" name="solplatform.jar">
+      <element id="module-output" name="solplatform" />
+    </root>
+  </artifact>
+</component>

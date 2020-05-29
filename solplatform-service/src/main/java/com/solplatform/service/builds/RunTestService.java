@@ -114,6 +114,7 @@ public class RunTestService {
                 log.info ("将接口数据存储到数据库");
                 buildMapper.updateBuildInterface (buildContent.getBuildInterfaceEntity ());
             }
+            log.info ("统计所有接口中用例通过率");
         } catch (Exception e) {
             e.printStackTrace ();
             System.out.println (e.getMessage ());

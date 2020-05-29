@@ -39,12 +39,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.5.3.RELEASE</version>
                 <configuration>
-                    <classifier>exec</classifier>
-                    <!-- 没有该配置，devtools 不生效 -->
-                    <fork>true</fork>
-                    <addResources>true</addResources>
+                    <mainClass>com.solplatform.SpringbootApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
