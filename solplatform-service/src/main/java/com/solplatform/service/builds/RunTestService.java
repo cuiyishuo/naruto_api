@@ -146,9 +146,8 @@ public class RunTestService {
             } else {
                 buildContent.getBuildTestEntity ().setStatus (BuildStatus.PARTIALPASS.name ());
             }
-            buildMapper.updateBuildTest (buildContent.getBuildTestEntity ());
             log.info ("将buildtest数据存储到数据库");
-
+            buildMapper.updateBuildTest (buildContent.getBuildTestEntity ());
         } catch (Exception e) {
             e.printStackTrace ();
             System.out.println (e.getMessage ());

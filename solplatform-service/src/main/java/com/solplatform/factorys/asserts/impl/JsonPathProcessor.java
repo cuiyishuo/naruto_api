@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPath;
 import com.solplatform.constants.BuildStatus;
 import com.solplatform.entity.builds.BuildCaseEntity;
+import com.solplatform.exception.BusinessException;
 import com.solplatform.factorys.asserts.AssertFactory;
 import com.solplatform.factorys.asserts.AssertProcessor;
 import com.solplatform.service.AssertExpressionService;
@@ -52,7 +53,7 @@ public class JsonPathProcessor implements AssertProcessor {
             expect = JSONPath.eval (expressionObj, "$.expectValue").toString ();
             log.info ("解析出来的期望值是:{}", expect);
             try {
-                Assert.isTrue (actual.equalsIgnoreCase (expect),"结果与预期不符");
+                Assert.isTrue (actual.equalsIgnoreCase (expect), "结果与预期不符");
             } catch (IllegalArgumentException e) {
                 buildCaseEntity.setStatus (BuildStatus.FAILED.name ());
                 log.error ("测试用例[" + buildCaseEntity.getCaseName () + "]断言校验未通过");

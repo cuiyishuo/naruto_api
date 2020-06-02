@@ -84,6 +84,45 @@ public class BuildService {
     }
 
     /**
+     * 通过接口list创建测试构建任务，并返回构建任务id
+     *
+     * @param interfaceIds interface集合
+     */
+    @Transactional
+    public String addBuildTestForInterface(List<String> interfaceIds) {
+        // 1、处理接口
+        // 1.1、查询出该批用例所属的接口interfaceId，然后查询接口信息
+        List<HttpEntity> httpEntities = componentMapper.findComponentByInterfaceIds (interfaceIds);
+        // 1.2、将取出的interfaceEntity属性copy到buildInterfaceEntity中
+        List<BuildInterfaceEntity> buildInterfaceEntities = this.copyPropertiesForInterface (httpEntities);
+        // 2、遍历接口list，处理每个接口下的case
+        interfaceIds.forEach (interfaceId -> {
+            // 2.1 通过interfaceId查到接口下的测试用例
+            List<CaseEntity> caseEntities = caseMapper.findCasebyInterfaceId (interfaceId);
+            // 2.2、将取出的caseEntity属性copy到buildCaseEntity中
+            List<BuildCaseEntity> buildCaseEntities = this.copyPropertiesForCase (caseEntities);
+            // 2.3 再处理用例，将buildCase中的interfaceId，替换为新的buildInterfaceId（也就是本次构建接的口下的cases）
+            buildCaseEntities.forEach (buildCaseEntity -> buildCaseEntity.setInterfaceId (interfaceId));
+            // 2.4、批量插入用例数据
+            buildMapper.addBuildCases (buildCaseEntities);
+        });
+        // 3、新建构建任务，并取出构建id
+        BuildTestEntity buildTestEntity = new BuildTestEntity ();
+        buildTestEntity.setTestPlanName ("接口任务-"+ DateUtil.getCurrentDate ());
+        buildTestEntity.setStatus (BuildStatus.WAITFOREXCUTE.name ());
+        buildTestEntity.setMode (RunMode.MODEL.name ());
+        buildTestEntity.setProjectId (SessionUtil.getSession("lastProjectId"));
+        String userName = userMapper.findUserById (SessionUtil.getSession ("userId")).getUserName ();
+        buildTestEntity.setExcutionUser (userName);
+        buildMapper.addBuildTest (buildTestEntity);
+        String buildTestId = buildTestEntity.getId ();
+        // 6、在处理接口，赋值给buildInterface中的buildTestId
+        buildInterfaceEntities.forEach (buildInterface -> buildInterface.setBuildTestId (buildTestId));
+        buildMapper.addBuildInterfaces (buildInterfaceEntities);
+        return buildTestId;
+    }
+
+    /**
      * 遍历请求传来的要执行的cases复制属性返回buildCase集合
      *
      * @param caseEntities

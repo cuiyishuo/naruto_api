@@ -40,5 +40,18 @@ public class BuildController {
         String buildTestId = buildService.addBuildTestForCase (caseIds);
         return CommonResult.success (buildTestId);
     }
+
+    /**
+     * 构建接口级别的任务
+     *
+     * @param buildArray
+     * @return
+     */
+    @PostMapping("/interfaces")
+    public CommonResult buildInterface(@RequestBody BuildArray buildArray) {
+        List<String> interfaceIds = new ArrayList<String> (Arrays.asList (buildArray.getInterfaceIds ()));
+        String buildTestId = buildService.addBuildTestForInterface (interfaceIds);
+        return CommonResult.success (buildTestId);
+    }
 }
 
