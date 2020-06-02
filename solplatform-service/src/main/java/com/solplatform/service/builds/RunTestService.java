@@ -13,13 +13,17 @@ import com.solplatform.factorys.component.ComponentProcessor;
 import com.solplatform.mapper.BuildMapper;
 import com.solplatform.service.AssertExpressionService;
 import com.solplatform.util.Calculat;
+import com.solplatform.util.DateUtil;
 import com.solplatform.util.LogInfoUtil;
 import com.solplatform.vo.BuildContent;
 import com.solplatform.vo.ResponseData;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.filters.WebdavFixFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -73,6 +77,13 @@ public class RunTestService {
         try {
             List<BuildInterfaceEntity> buildInterfaceEntities = buildContent.getBuildTestEntity ().getBuildInterfaceEntities ();
             Iterator<BuildInterfaceEntity> buildInterfaceEntityIterator = buildInterfaceEntities.iterator ();
+
+            int passCaseSizeInterface = 0;
+            int caseSizeInterface = 0;
+            LocalDateTime startAt = null;
+            LocalDateTime endAt = null;
+            Duration duration = null;
+            startAt = DateUtil.getCurrentDate ();
             while (buildInterfaceEntityIterator.hasNext ()) {
                 log.info ("遍历接口list,并存储到上下文中");
                 BuildInterfaceEntity buildInterfaceEntity = buildInterfaceEntityIterator.next ();
@@ -113,8 +124,31 @@ public class RunTestService {
                 buildContent.getBuildInterfaceEntity ().setPassRate (percentage);
                 log.info ("将接口数据存储到数据库");
                 buildMapper.updateBuildInterface (buildContent.getBuildInterfaceEntity ());
+                // 将每次
+                caseSizeInterface += caseSize;
+                passCaseSizeInterface += passCaseSize;
             }
+            endAt = DateUtil.getCurrentDate ();
+            duration = Duration.between (startAt, endAt);
             log.info ("统计所有接口中用例通过率");
+            buildContent.getBuildTestEntity ().setCaseSize (caseSizeInterface);
+            buildContent.getBuildTestEntity ().setPassCaseSize (passCaseSizeInterface);
+            buildContent.getBuildTestEntity ().setFailedCaseSize (caseSizeInterface - passCaseSizeInterface);
+            double percentage = Calculat.percentage ((double) passCaseSizeInterface, (double) caseSizeInterface, 2);
+            buildContent.getBuildTestEntity ().setPassRate (percentage);
+            buildContent.getBuildTestEntity ().setStartAt (startAt.toString ());
+            buildContent.getBuildTestEntity ().setEndAt (endAt.toString ());
+            buildContent.getBuildTestEntity ().setDuration (String.valueOf (duration.toMillis ()));
+            if (passCaseSizeInterface == caseSizeInterface) {
+                buildContent.getBuildTestEntity ().setStatus (BuildStatus.PASS.name ());
+            } else if (passCaseSizeInterface == 0) {
+                buildContent.getBuildTestEntity ().setStatus (BuildStatus.FAILED.name ());
+            } else {
+                buildContent.getBuildTestEntity ().setStatus (BuildStatus.PARTIALPASS.name ());
+            }
+            buildMapper.updateBuildTest (buildContent.getBuildTestEntity ());
+            log.info ("将buildtest数据存储到数据库");
+
         } catch (Exception e) {
             e.printStackTrace ();
             System.out.println (e.getMessage ());

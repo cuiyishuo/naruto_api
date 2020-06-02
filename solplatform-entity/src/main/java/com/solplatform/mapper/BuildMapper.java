@@ -33,4 +33,7 @@ public interface BuildMapper {
 
     // 更新构建的接口
     void updateBuildInterface(BuildInterfaceEntity buildInterfaceEntity);
+
+    // 更新构建的任务
+    void updateBuildTest(BuildTestEntity buildTestEntity);
 }

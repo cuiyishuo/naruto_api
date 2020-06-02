@@ -18,9 +18,9 @@ public class BuildTestEntity extends BaseEntity {
     // 执行用例数
     private int caseSize;
     // 用例通过数
-    private String passCaseSize;
+    private int passCaseSize;
     // 用例失败数
-    private String failedCaseSize;
+    private int failedCaseSize;
     // 用例通过率
     private double passRate;
     // 项目id

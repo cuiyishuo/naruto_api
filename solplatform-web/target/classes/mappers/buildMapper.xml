@@ -182,4 +182,35 @@
         </set>
         where id=#{id}
     </update>
+
+    <update id="updateBuildTest" parameterType="com.solplatform.entity.builds.BuildTestEntity">
+        update build_test
+        <set>
+            <if test="passRate != null">
+                pass_rate = #{passRate},
+            </if>
+            <if test="caseSize != null">
+                case_size = #{caseSize},
+            </if>
+            <if test="passCaseSize != null">
+                pass_case_size = #{passCaseSize},
+            </if>
+            <if test="failedCaseSize != null">
+                failed_case_size = #{failedCaseSize},
+            </if>
+            <if test="startAt != null">
+                start_at = #{startAt},
+            </if>
+            <if test="endAt != null">
+                end_at = #{endAt},
+            </if>
+            <if test="duration != null">
+                duration = #{duration},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
