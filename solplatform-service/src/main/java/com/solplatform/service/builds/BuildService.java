@@ -95,17 +95,21 @@ public class BuildService {
         List<HttpEntity> httpEntities = componentMapper.findComponentByInterfaceIds (interfaceIds);
         // 1.2、将取出的interfaceEntity属性copy到buildInterfaceEntity中
         List<BuildInterfaceEntity> buildInterfaceEntities = this.copyPropertiesForInterface (httpEntities);
-        // 2、遍历接口list，处理每个接口下的case
-        interfaceIds.forEach (interfaceId -> {
+        // 2、遍历接口list，处理每个接口下的case(因为验证过两个list顺序未改变)
+        Iterator<BuildInterfaceEntity> buildInterfaceIterator = buildInterfaceEntities.iterator ();
+        Iterator<String> interfaceIdIterator = interfaceIds.iterator ();
+        while (buildInterfaceIterator.hasNext () && interfaceIdIterator.hasNext ()) {
+            String interfaceId = interfaceIdIterator.next ();
+            String newInterfaceId = buildInterfaceIterator.next ().getId ();
             // 2.1 通过interfaceId查到接口下的测试用例
             List<CaseEntity> caseEntities = caseMapper.findCasebyInterfaceId (interfaceId);
             // 2.2、将取出的caseEntity属性copy到buildCaseEntity中
             List<BuildCaseEntity> buildCaseEntities = this.copyPropertiesForCase (caseEntities);
             // 2.3 再处理用例，将buildCase中的interfaceId，替换为新的buildInterfaceId（也就是本次构建接的口下的cases）
-            buildCaseEntities.forEach (buildCaseEntity -> buildCaseEntity.setInterfaceId (interfaceId));
+            buildCaseEntities.forEach (buildCaseEntity -> buildCaseEntity.setInterfaceId (newInterfaceId));
             // 2.4、批量插入用例数据
             buildMapper.addBuildCases (buildCaseEntities);
-        });
+        }
         // 3、新建构建任务，并取出构建id
         BuildTestEntity buildTestEntity = new BuildTestEntity ();
         buildTestEntity.setTestPlanName ("接口任务-"+ DateUtil.getCurrentDate ());

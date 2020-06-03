@@ -18,7 +18,7 @@
     </insert>
 
     <select id="findCasebyInterfaceId" parameterType="java.lang.String" resultMap="caseWithHttp">
-        select tc.id,tc.case_name,tc.case_level,tc.assert_type,tc.assert_header_list,tc.assert_resbody_list,tc.create_time,tc.update_time,tc.interface_id,
+        select tc.id,tc.case_name,tc.case_level,tc.assert_type,tc.assert_header_list,tc.assert_resbody_list,tc.create_time,tc.update_time,tc.interface_id,tc.interface_in_case_id,
          ic.id as interfaceId,ic.interface_name,ic.methods,ic.headers,ic.host,ic.api_url,ic.body,ic.params,ic.time_out,ic.component_type,ic.create_time,ic.update_time
         from testcase tc
         left join interface ic
@@ -36,6 +36,7 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="interfaceId" column="interface_id"/>
+        <result property="interfaceInCaseId" column="interface_in_case_id"/>
         <association property="httpEntity" javaType="com.solplatform.entity.HttpEntity">
             <!--这里id映射的是起了别名的interface表中的id-->
             <result property="id" column="interfaceId"/>
