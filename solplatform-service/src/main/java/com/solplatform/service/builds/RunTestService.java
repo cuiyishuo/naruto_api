@@ -11,6 +11,7 @@ import com.solplatform.factorys.asserts.AssertProcessor;
 import com.solplatform.factorys.component.ComponentFactory;
 import com.solplatform.factorys.component.ComponentProcessor;
 import com.solplatform.mapper.BuildMapper;
+import com.solplatform.mapper.builds.BuildTestMapper;
 import com.solplatform.service.AssertExpressionService;
 import com.solplatform.util.Calculat;
 import com.solplatform.util.DateUtil;
@@ -43,6 +44,8 @@ public class RunTestService {
     AssertExpressionService assertExpressionService;
     @Autowired
     AssertFactory assertFactory;
+    @Autowired
+    BuildTestMapper buildTestMapper;
 
     /**
      * * 执行构建任务
@@ -50,11 +53,11 @@ public class RunTestService {
      * @param buildContent
      * @return
      */
-    public BuildTestEntity runTest(BuildContent buildContent) {
+    public void runTest(BuildContent buildContent) {
         log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
         String buildTestId = buildContent.getBuildTestEntity ().getId ();
         // 1、根据构建id查询出接口list和用例list的信息
-        BuildTestEntity buildTestEntity = buildMapper.findBuildTestById (buildTestId);
+        BuildTestEntity buildTestEntity = buildTestMapper.findBuildTestById (buildTestId);
         // 2、存入构建上下文
         buildContent.setBuildTestEntity (buildTestEntity);
         String runMode = buildTestEntity.getMode ();
@@ -64,7 +67,6 @@ public class RunTestService {
         } else if (RunMode.TESTPLAN.name ().equals (runMode)) {
             // 执行测试计划模式的构建
         }
-        return buildTestEntity;
     }
 
     /**
@@ -147,7 +149,7 @@ public class RunTestService {
                 buildContent.getBuildTestEntity ().setStatus (BuildStatus.PARTIALPASS.name ());
             }
             log.info ("将buildtest数据存储到数据库");
-            buildMapper.updateBuildTest (buildContent.getBuildTestEntity ());
+            buildTestMapper.updateBuildTest (buildContent.getBuildTestEntity ());
         } catch (Exception e) {
             e.printStackTrace ();
             System.out.println (e.getMessage ());

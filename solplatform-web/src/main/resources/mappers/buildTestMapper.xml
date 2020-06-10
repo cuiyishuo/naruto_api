@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--通过namespace绑定上面创建的接口类，文件名就是【数据对象类名+Mapper.xml】-->
+<mapper namespace="com.solplatform.mapper.builds.BuildTestMapper">
+    <insert id="addBuildTest" parameterType="com.solplatform.entity.builds.BuildTestEntity">
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select REPLACE(UUID(),'-','')
+        </selectKey>
+        insert into build_test
+        (id,status,case_size,pass_case_size,failed_case_size,pass_rate,project_id,mode,duration,start_at,end_at,test_plan_name,test_plan_id,excution_user,create_time)
+        values
+        (#{id},#{status},#{caseSize},#{passCaseSize},#{failedCaseSize},#{passRate},#{projectId},#{mode},#{duration},#{startAt},#{endAt},#{testPlanName},#{testPlanId},
+        #{excutionUser},now())
+    </insert>
+
+    <select id="findBuildTestById" parameterType="java.lang.String" resultMap="buildTestMap">
+        select * from build_test
+        where id=#{0}
+    </select>
+
+    <!--  构建任务对象  -->
+    <resultMap id="buildTestMap" type="com.solplatform.entity.builds.BuildTestEntity">
+        <result property="id" column="id"/>
+        <result property="status" column="status"/>
+        <result property="caseSize" column="case_size"/>
+        <result property="passCaseSize" column="pass_case_size"/>
+        <result property="failedCaseSize" column="failed_case_size"/>
+        <result property="passRate" column="pass_rate"/>
+        <result property="projectId" column="project_id"/>
+        <result property="mode" column="mode"/>
+        <result property="duration" column="duration"/>
+        <result property="startAt" column="start_at"/>
+        <result property="endAt" column="end_at"/>
+        <result property="testPlanName" column="test_plan_name"/>
+        <result property="testPlanId" column="test_plan_id"/>
+        <result property="excutionUser" column="excution_user"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="buildInterfaceEntities" column="id"
+                    select="com.solplatform.mapper.BuildMapper.findBuildInterfaceByBuildTestId"/>
+    </resultMap>
+
+    <update id="updateBuildTest" parameterType="com.solplatform.entity.builds.BuildTestEntity">
+        update build_test
+        <set>
+            <if test="passRate != null">
+                pass_rate = #{passRate},
+            </if>
+            <if test="caseSize != null">
+                case_size = #{caseSize},
+            </if>
+            <if test="passCaseSize != null">
+                pass_case_size = #{passCaseSize},
+            </if>
+            <if test="failedCaseSize != null">
+                failed_case_size = #{failedCaseSize},
+            </if>
+            <if test="startAt != null">
+                start_at = #{startAt},
+            </if>
+            <if test="endAt != null">
+                end_at = #{endAt},
+            </if>
+            <if test="duration != null">
+                duration = #{duration},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findLastBuildTestByProjectId" parameterType="java.lang.String" resultMap="buildTestMap">
+        select * from build_test
+        where project_id = #{0}
+        order by start_at desc
+        limit 1
+    </select>
+</mapper>

@@ -3,9 +3,13 @@ package com.solplatform.controller.testbuild;
 import com.solplatform.common.CommonResult;
 import com.solplatform.entity.builds.BuildTestEntity;
 import com.solplatform.service.builds.RunTestService;
+import com.solplatform.thread.RunTestThread;
 import com.solplatform.vo.BuildContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * 执行测试接口
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 public class RunTestController {
     @Autowired
     RunTestService runTestService;
+    @Resource(name="runTestThreadPool")
+    ThreadPoolTaskExecutor runTestExecutor;
 
     /**
      * 运行用例级别的测试
@@ -27,11 +33,9 @@ public class RunTestController {
      */
     @GetMapping("/build/{buildTestId}")
     public CommonResult runTestByCase(@PathVariable String buildTestId) {
-        BuildContent buildContent = new BuildContent ();
-        BuildTestEntity buildTestEntity = new BuildTestEntity ();
-        buildTestEntity.setId (buildTestId);
-        buildContent.setBuildTestEntity (buildTestEntity);
-        buildTestEntity = runTestService.runTest (buildContent);
-        return CommonResult.success (buildTestEntity);
+        // 因为是new出来的对象，所以无法在期内部使用autowired，所以通过构造函数传入
+        RunTestThread runTestThread = new RunTestThread (buildTestId,runTestService);
+        runTestExecutor.execute (runTestThread);
+        return CommonResult.success ();
     }
 }

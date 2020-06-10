@@ -26,5 +26,9 @@ public class UserVo {
      * 用户名
      */
     private String userName;
+    /**
+     * 最后一次登录时的项目id
+     */
+    private String lastProjectId;
 
 }

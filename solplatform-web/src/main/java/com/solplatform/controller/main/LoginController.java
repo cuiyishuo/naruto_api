@@ -66,7 +66,7 @@ public class LoginController {
                 UserVo userVo = dozerConvertor.convertor (userEntityPo, UserVo.class);
 
                 // 将用户的lastprojectid保存到sesstion中
-                httpSession.setAttribute ("lastProjectId",userEntity.getLastProjectId ());
+                httpSession.setAttribute ("lastProjectId",userVo.getLastProjectId ());
                 return CommonResult.success (userVo);
             }
         }

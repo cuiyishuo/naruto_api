@@ -11,6 +11,7 @@ import com.solplatform.mapper.BuildMapper;
 import com.solplatform.mapper.CaseMapper;
 import com.solplatform.mapper.ComponentMapper;
 import com.solplatform.mapper.UserMapper;
+import com.solplatform.mapper.builds.BuildTestMapper;
 import com.solplatform.util.DateUtil;
 import com.solplatform.util.GenerateId;
 import com.solplatform.util.SessionUtil;
@@ -39,6 +40,8 @@ public class BuildService {
     BuildMapper buildMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    BuildTestMapper buildTestMapper;
 
     /**
      * 通过某一个接口下的用例，创建测试构建任务，并返回构建任务id
@@ -68,14 +71,14 @@ public class BuildService {
         buildMapper.addBuildCases (buildCaseEntities);
         // 5、新建构建任务，并取出构建id
         BuildTestEntity buildTestEntity = new BuildTestEntity ();
-        buildTestEntity.setTestPlanName ("用例任务-"+ DateUtil.getCurrentDate ());
+        buildTestEntity.setTestPlanName ("用例任务-" + DateUtil.getCurrentDate ());
         buildTestEntity.setStatus (BuildStatus.WAITFOREXCUTE.name ());
         buildTestEntity.setMode (RunMode.MODEL.name ());
         buildTestEntity.setCaseSize (buildCaseEntities.size ());
-        buildTestEntity.setProjectId (SessionUtil.getSession("lastProjectId"));
+        buildTestEntity.setProjectId (SessionUtil.getSession ("lastProjectId"));
         String userName = userMapper.findUserById (SessionUtil.getSession ("userId")).getUserName ();
         buildTestEntity.setExcutionUser (userName);
-        buildMapper.addBuildTest (buildTestEntity);
+        buildTestMapper.addBuildTest (buildTestEntity);
         String buildTestId = buildTestEntity.getId ();
         // 6、在处理接口，赋值给buildInterface中的buildTestId
         buildInterfaceEntities.forEach (buildInterface -> buildInterface.setBuildTestId (buildTestId));
@@ -112,13 +115,13 @@ public class BuildService {
         }
         // 3、新建构建任务，并取出构建id
         BuildTestEntity buildTestEntity = new BuildTestEntity ();
-        buildTestEntity.setTestPlanName ("接口任务-"+ DateUtil.getCurrentDate ());
+        buildTestEntity.setTestPlanName ("接口任务-" + DateUtil.getCurrentDate ());
         buildTestEntity.setStatus (BuildStatus.WAITFOREXCUTE.name ());
         buildTestEntity.setMode (RunMode.MODEL.name ());
-        buildTestEntity.setProjectId (SessionUtil.getSession("lastProjectId"));
+        buildTestEntity.setProjectId (SessionUtil.getSession ("lastProjectId"));
         String userName = userMapper.findUserById (SessionUtil.getSession ("userId")).getUserName ();
         buildTestEntity.setExcutionUser (userName);
-        buildMapper.addBuildTest (buildTestEntity);
+        buildTestMapper.addBuildTest (buildTestEntity);
         String buildTestId = buildTestEntity.getId ();
         // 6、在处理接口，赋值给buildInterface中的buildTestId
         buildInterfaceEntities.forEach (buildInterface -> buildInterface.setBuildTestId (buildTestId));
@@ -164,5 +167,16 @@ public class BuildService {
             buildInterfaceEntities.add (buildInterfaceEntity);
         }
         return buildInterfaceEntities;
+    }
+
+    /**
+     * 查询当前项目最后一个构建的测试任务
+     *
+     * @param projectId
+     * @return
+     */
+    public BuildTestEntity getLastBuildTest(String projectId) {
+        BuildTestEntity buildTestEntity = buildTestMapper.findLastBuildTestByProjectId (projectId);
+        return buildTestEntity;
     }
 }

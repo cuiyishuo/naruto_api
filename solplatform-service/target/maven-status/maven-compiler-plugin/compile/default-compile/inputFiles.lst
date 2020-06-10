@@ -2,6 +2,7 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/builds/BuildService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/common/CodeMsg.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/TablePage.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/thread/RunTestThread.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/component/impl/HttpProcessor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/impl/FullTextProcessor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/ComponentService.java
@@ -17,6 +18,7 @@
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/vo/UserVo.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/impl/JsonPathProcessor.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/AssertProcessor.java
+/Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/thread/ThreadPoolConfiguration.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/service/UserService.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/factorys/asserts/AssertFactory.java
 /Users/cuiyishuo/IdeaProjects/solplatform/solplatform-service/src/main/java/com/solplatform/exception/BusinessException.java

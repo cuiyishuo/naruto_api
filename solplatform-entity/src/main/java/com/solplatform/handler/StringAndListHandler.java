@@ -31,7 +31,7 @@ public class StringAndListHandler extends BaseTypeHandler<List> {
         String maplistStr = "[#]";
         Iterator<Map<String, Object>> it = mapList.iterator ();
         while (it.hasNext ()) {
-            System.err.println ("list循环：" + maplistStr.split ("#")[0] + "{#},#" + maplistStr.split ("#")[1]);
+//            System.err.println ("list循环：" + maplistStr.split ("#")[0] + "{#},#" + maplistStr.split ("#")[1]);
             // 每循环一次增加一个断言对象 得到[{}]
             maplistStr = maplistStr.split ("#")[0] + "{#},#" + maplistStr.split ("#")[1];
             System.err.println (maplistStr);
@@ -39,10 +39,10 @@ public class StringAndListHandler extends BaseTypeHandler<List> {
             Map<String, Object> map = it.next ();
             for (Map.Entry<String, Object> param : map.entrySet ()) {
                 maplistStr = maplistStr.split ("#", 2)[0] + param.getKey () + ":'" + param.getValue () + "',#" + maplistStr.split ("#", 2)[1];
-                System.out.println ("map循环：" + maplistStr);
+//                System.out.println ("map循环：" + maplistStr);
             }
             maplistStr = maplistStr.replace (",#}", "}");
-            System.out.println ("map循环结束：" + maplistStr);
+//            System.out.println ("map循环结束：" + maplistStr);
         }
         maplistStr = maplistStr.replace (",#]", "]");
         maplistStr = maplistStr.replace ("#]", "]");

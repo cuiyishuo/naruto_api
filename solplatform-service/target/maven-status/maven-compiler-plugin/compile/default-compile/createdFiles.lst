@@ -13,6 +13,7 @@ com/solplatform/util/DateUtil.class
 com/solplatform/util/GenerateId.class
 com/solplatform/service/builds/RunTestService.class
 com/solplatform/service/UtilService$2.class
+com/solplatform/thread/RunTestThread.class
 com/solplatform/service/UtilService$4.class
 com/solplatform/vo/TablePage.class
 com/solplatform/service/builds/BuildService.class
@@ -21,6 +22,7 @@ com/solplatform/common/CodeMsg.class
 com/solplatform/service/UtilService.class
 com/solplatform/constants/RunMode.class
 com/solplatform/service/ComponentService.class
+com/solplatform/thread/ThreadPoolConfiguration.class
 com/solplatform/util/LogInfoUtil.class
 com/solplatform/factorys/asserts/AssertProcessor.class
 com/solplatform/exception/BusinessException.class
