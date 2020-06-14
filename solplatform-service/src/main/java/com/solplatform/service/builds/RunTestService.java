@@ -17,9 +17,7 @@ import com.solplatform.util.Calculat;
 import com.solplatform.util.DateUtil;
 import com.solplatform.util.LogInfoUtil;
 import com.solplatform.vo.BuildContent;
-import com.solplatform.vo.ResponseData;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.filters.WebdavFixFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +75,9 @@ public class RunTestService {
     public void runTestByModel(BuildContent buildContent) {
         log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
         try {
+            log.info ("更新构建任务状态为【执行中】");
+            buildContent.getBuildTestEntity ().setStatus (BuildStatus.EXCUTING.name ());
+            buildTestMapper.updateBuildTest (buildContent.getBuildTestEntity ());
             List<BuildInterfaceEntity> buildInterfaceEntities = buildContent.getBuildTestEntity ().getBuildInterfaceEntities ();
             Iterator<BuildInterfaceEntity> buildInterfaceEntityIterator = buildInterfaceEntities.iterator ();
 
@@ -109,6 +110,8 @@ public class RunTestService {
                     AssertProcessor assertProcessor = assertFactory.getAssert (assertType);
                     assertProcessor.assertTest (buildContent);
                     log.info ("将用例更新到数据库");
+                    // 测试前端轮询，加入线程等待
+                    Thread.sleep (3000);
                     try {
                         buildMapper.updateBuildCase (buildContent.getBuildCaseEntity ());
                     } catch (Exception e) {

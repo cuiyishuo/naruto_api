@@ -179,4 +179,15 @@ public class BuildService {
         BuildTestEntity buildTestEntity = buildTestMapper.findLastBuildTestByProjectId (projectId);
         return buildTestEntity;
     }
+
+    /**
+     * 通过buildid查询当前构建任务
+     *
+     * @param buildTestId
+     * @return
+     */
+    public BuildTestEntity getBuildTestById(String buildTestId) {
+        BuildTestEntity buildTestEntity = buildTestMapper.findBuildTestById (buildTestId);
+        return buildTestEntity;
+    }
 }

@@ -24,10 +24,16 @@ public class Report {
     @Autowired
     UserService userService;
 
-    @GetMapping("/lastReport")
+    @GetMapping("/last")
     public CommonResult getLastBuildTestResult() {
         String projectId = userService.getLastProjectId ();
         BuildTestEntity buildTestEntity = buildService.getLastBuildTest (projectId);
+        return CommonResult.success (buildTestEntity);
+    }
+
+    @GetMapping("/current")
+    public CommonResult getCurrentBuildTestResult(String buildId) {
+        BuildTestEntity buildTestEntity = buildService.getBuildTestById (buildId);
         return CommonResult.success (buildTestEntity);
     }
 }
