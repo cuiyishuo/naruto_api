@@ -1,10 +1,8 @@
 package com.solplatform.controller.testbuild;
 
 import com.solplatform.common.CommonResult;
-import com.solplatform.entity.builds.BuildTestEntity;
 import com.solplatform.service.builds.RunTestService;
 import com.solplatform.thread.RunTestThread;
-import com.solplatform.vo.BuildContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.*;

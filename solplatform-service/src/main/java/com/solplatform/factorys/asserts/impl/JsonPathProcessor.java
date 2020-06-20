@@ -9,6 +9,7 @@ import com.solplatform.factorys.asserts.AssertFactory;
 import com.solplatform.factorys.asserts.AssertProcessor;
 import com.solplatform.service.AssertExpressionService;
 import com.solplatform.util.LogInfoUtil;
+import com.solplatform.util.ReportLogUtil;
 import com.solplatform.vo.BuildContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class JsonPathProcessor implements AssertProcessor {
     @Override
     public void assertTest(BuildContent buildContent) {
         log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
+        ReportLogUtil reportLogUtil = buildContent.getReportLogUtil ();
         BuildCaseEntity buildCaseEntity = buildContent.getBuildCaseEntity ();
         List actualBody = buildCaseEntity.getResponseBody ();
         Map<String, String> actualHeader = buildCaseEntity.getResponseHeader ();

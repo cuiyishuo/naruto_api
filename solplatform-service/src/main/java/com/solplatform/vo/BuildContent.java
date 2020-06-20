@@ -3,6 +3,7 @@ package com.solplatform.vo;
 import com.solplatform.entity.builds.BuildCaseEntity;
 import com.solplatform.entity.builds.BuildInterfaceEntity;
 import com.solplatform.entity.builds.BuildTestEntity;
+import com.solplatform.util.ReportLogUtil;
 import lombok.Data;
 
 /**
@@ -13,6 +14,7 @@ import lombok.Data;
  */
 @Data
 public class BuildContent {
+    private ReportLogUtil reportLogUtil;
     private BuildTestEntity buildTestEntity;
     private BuildInterfaceEntity buildInterfaceEntity;
     private BuildCaseEntity buildCaseEntity;
