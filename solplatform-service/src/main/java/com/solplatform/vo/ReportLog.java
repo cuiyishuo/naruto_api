@@ -10,7 +10,8 @@ import lombok.Data;
  */
 @Data
 public class ReportLog {
+    // 文件最后读取的指针位置
     private Long lastTimeFileSize;
+    // 读取的文本
     private String text;
-    private String color;
 }

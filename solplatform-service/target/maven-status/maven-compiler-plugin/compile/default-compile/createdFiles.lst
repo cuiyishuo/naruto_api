@@ -26,6 +26,7 @@ com/solplatform/constants/RunMode.class
 com/solplatform/service/ComponentService.class
 com/solplatform/thread/ThreadPoolConfiguration.class
 com/solplatform/util/LogInfoUtil.class
+com/solplatform/service/builds/ReportService.class
 com/solplatform/factorys/asserts/AssertProcessor.class
 com/solplatform/exception/BusinessException.class
 com/solplatform/factorys/component/impl/HttpProcessor.class

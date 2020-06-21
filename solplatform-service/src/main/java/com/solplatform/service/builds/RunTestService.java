@@ -138,7 +138,7 @@ public class RunTestService {
                     if (BuildStatus.PASS.name ().equalsIgnoreCase (buildContent.getBuildCaseEntity ().getStatus ())) {
                         passCaseSize++;
                     }
-                    reportLogUtil.writeGreyLog ("@@@@@@@@@ 结束执行用例 @@@@@@@@@");
+                    reportLogUtil.writeGreyLog ("@@@@@@ 结束执行用例 @@@@@@");
                 }
                 log.info ("统计用例通过率");
                 buildContent.getBuildInterfaceEntity ().setCaseSize (caseSize);
@@ -172,6 +172,7 @@ public class RunTestService {
             }
             log.info ("将buildtest数据存储到数据库");
             buildTestMapper.updateBuildTest (buildContent.getBuildTestEntity ());
+            reportLogUtil.writeGreyLog ("测试任务执行完毕");
         } catch (Exception e) {
             e.printStackTrace ();
             System.out.println (e.getMessage ());
