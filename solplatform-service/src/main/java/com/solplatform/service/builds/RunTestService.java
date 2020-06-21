@@ -16,6 +16,7 @@ import com.solplatform.service.AssertExpressionService;
 import com.solplatform.util.Calculat;
 import com.solplatform.util.DateUtil;
 import com.solplatform.util.LogInfoUtil;
+import com.solplatform.util.ReportLogUtil;
 import com.solplatform.vo.BuildContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +55,22 @@ public class RunTestService {
     public void runTest(BuildContent buildContent) {
         log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
         String buildTestId = buildContent.getBuildTestEntity ().getId ();
+        // 通过buildid创建报告日志文件
+        ReportLogUtil reportLogUtil = new ReportLogUtil (buildTestId);
+        buildContent.setReportLogUtil (reportLogUtil);
+        reportLogUtil.writeGreyLog ("开始初始化运行数据");
         // 1、根据构建id查询出接口list和用例list的信息
         BuildTestEntity buildTestEntity = buildTestMapper.findBuildTestById (buildTestId);
+        reportLogUtil.writeGreyLog ("初始化接口信息完成,运行接口数量:" + buildTestEntity.getBuildInterfaceEntities ().size ());
         // 2、存入构建上下文
         buildContent.setBuildTestEntity (buildTestEntity);
         String runMode = buildTestEntity.getMode ();
         if (RunMode.MODEL.name ().equals (runMode)) {
+            reportLogUtil.writeGreyLog ("当前运行模式:接口模式运行");
             // 执行模块模式的构建
             this.runTestByModel (buildContent);
         } else if (RunMode.TESTPLAN.name ().equals (runMode)) {
+            reportLogUtil.writeGreyLog ("当前运行模式:测试计划模式运行");
             // 执行测试计划模式的构建
         }
     }
@@ -76,6 +84,8 @@ public class RunTestService {
         log.info ("进入方法【{}】", LogInfoUtil.getCurrentMethod ());
         try {
             log.info ("更新构建任务状态为【执行中】");
+            ReportLogUtil reportLogUtil = buildContent.getReportLogUtil ();
+            reportLogUtil.writeGreyLog ("开始执行测试用例");
             buildContent.getBuildTestEntity ().setStatus (BuildStatus.EXCUTING.name ());
             buildTestMapper.updateBuildTest (buildContent.getBuildTestEntity ());
             List<BuildInterfaceEntity> buildInterfaceEntities = buildContent.getBuildTestEntity ().getBuildInterfaceEntities ();
@@ -100,6 +110,7 @@ public class RunTestService {
                 int passCaseSize = 0;
                 int caseSize = buildCaseEntities.size ();
                 while (buildCaseEntityIterator.hasNext ()) {
+                    reportLogUtil.writeGreyLog ("######### 开始执行用例 #########");
                     BuildCaseEntity buildCaseEntity = buildCaseEntityIterator.next ();
                     log.info ("遍历用例list,并存储到上下文中");
                     buildContent.setBuildCaseEntity (buildCaseEntity);
@@ -107,8 +118,15 @@ public class RunTestService {
                     componentProcessor.runTest (buildContent);
                     String assertType = buildCaseEntity.getAssertType ();
                     log.info ("开始通过工厂处理器执行 [assertTest()],断言类型为 [{}]", assertType);
+                    reportLogUtil.writeGreyLog ("执行断言");
                     AssertProcessor assertProcessor = assertFactory.getAssert (assertType);
                     assertProcessor.assertTest (buildContent);
+                    log.info ("根据用例执行成功/失败结果，输出日志");
+                    if ("PASS".equalsIgnoreCase (buildCaseEntity.getStatus ())) {
+                        reportLogUtil.writeGreenLog ("用例通过");
+                    } else {
+                        reportLogUtil.writeRedLog ("用例失败");
+                    }
                     log.info ("将用例更新到数据库");
                     // 测试前端轮询，加入线程等待
                     Thread.sleep (3000);
@@ -120,6 +138,7 @@ public class RunTestService {
                     if (BuildStatus.PASS.name ().equalsIgnoreCase (buildContent.getBuildCaseEntity ().getStatus ())) {
                         passCaseSize++;
                     }
+                    reportLogUtil.writeGreyLog ("@@@@@@ 结束执行用例 @@@@@@");
                 }
                 log.info ("统计用例通过率");
                 buildContent.getBuildInterfaceEntity ().setCaseSize (caseSize);
@@ -153,6 +172,7 @@ public class RunTestService {
             }
             log.info ("将buildtest数据存储到数据库");
             buildTestMapper.updateBuildTest (buildContent.getBuildTestEntity ());
+            reportLogUtil.writeGreyLog ("测试任务执行完毕");
         } catch (Exception e) {
             e.printStackTrace ();
             System.out.println (e.getMessage ());

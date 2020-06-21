@@ -1,3 +1,4 @@
+com/solplatform/vo/ReportLog.class
 com/solplatform/util/Calculat.class
 com/solplatform/util/SessionUtil.class
 com/solplatform/constants/BuildStatus.class
@@ -5,6 +6,7 @@ com/solplatform/vo/component/CaseVo.class
 com/solplatform/factorys/asserts/AssertFactory.class
 com/solplatform/common/CommonResult.class
 com/solplatform/factorys/asserts/impl/JsonPathProcessor.class
+com/solplatform/util/ReportLogUtil.class
 com/solplatform/factorys/component/ComponentFactory.class
 com/solplatform/service/UtilService$1.class
 com/solplatform/vo/BuildContent.class
@@ -24,6 +26,7 @@ com/solplatform/constants/RunMode.class
 com/solplatform/service/ComponentService.class
 com/solplatform/thread/ThreadPoolConfiguration.class
 com/solplatform/util/LogInfoUtil.class
+com/solplatform/service/builds/ReportService.class
 com/solplatform/factorys/asserts/AssertProcessor.class
 com/solplatform/exception/BusinessException.class
 com/solplatform/factorys/component/impl/HttpProcessor.class
